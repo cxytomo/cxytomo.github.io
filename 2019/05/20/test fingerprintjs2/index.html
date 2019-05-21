@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Tomo&#39;s blog">
 <meta property="og:description" content="利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-21T01:00:21.796Z">
+<meta property="og:updated_time" content="2019-05-21T01:19:18.804Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="test fingerprintjs2">
 <meta name="twitter:description" content="利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。">
@@ -183,6 +183,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.0/fingerprint2.min.js"></script>
 <script type="text/javascript">
   var fingerprintReport = function () {
+    debugger;
     var d1 = new Date();
     Fingerprint2.get(function (components) {
       var murmur = Fingerprint2.x64hash128(components.map(function (pair) { return pair.value }).join(), 31)
@@ -199,12 +200,20 @@
         $li.appendChild($Txt);
         $detail.appendChild($li);
       }
-      $("#fp-results").removeClass("invisible");
+      document.querySelector("#fp-results").removeClass("invisible");
     });
   }
-  $(function () {
-    $("#btn-get-fp").on("click", function () { fingerprintReport() });
-  });
+  window.onload = function (){
+    if (window.requestIdleCallback) {
+      requestIdleCallback(function () {
+        document.querySelector("#btn-get-fp").addEventListener("click", function () { fingerprintReport(); });
+      })
+    } else {
+      setTimeout(function () {
+        document.querySelector("#btn-get-fp").addEventListener("click", function () { fingerprintReport(); });
+      }, 500)
+    }
+  }
 </script>
       
 
@@ -442,15 +451,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Eclipse</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Luna</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
               </li>
              
               <li class="article-tag-list-item">
