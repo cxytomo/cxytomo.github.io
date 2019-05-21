@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Tomo&#39;s blog">
 <meta property="og:description" content="利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-21T00:51:49.826Z">
+<meta property="og:updated_time" content="2019-05-21T01:00:21.796Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="test fingerprintjs2">
 <meta name="twitter:description" content="利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。">
@@ -177,15 +177,35 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。<br><a id="more"></a></p>
+<p><style><br>.invisible {<br>    display: none;<br>}<br></style></p>
 <p><button type="button" class="btn btn-info" id="btn-get-fp">点击按钮生成你的浏览器指纹</button></p>
 <p><div id="fp-results" class="invisible"><br>    <div>Your browser fingerprint:<strong id="fp-value"></strong><br>    </div><br>    <div>用时: <b id="fp-time"></b> ms</div><br>    <div>详细采集字段如下：</div><br>    <ul id="fp-details"></ul><br></div></p>
-<p><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.0/fingerprint2.min.js"></script></p>
-<p><script type="text/javascript"><br>    var fingerprintReport = function () {<br>        var d1 = new Date();<br>        Fingerprint2.get(function (components) {<br>            var murmur = Fingerprint2.x64hash128(components.map(function (pair) { return pair.value }).join(), 31)<br>            var d2 = new Date();<br>            var time = d2 - d1;<br>            var $detail = document.querySelector(“#fp-details”);<br>            document.querySelector(“#fp-time”).textContent = time;<br>            document.querySelector(“#fp-value”).textContent = murmur;<br>            for (var index in components) {<br>              var obj = components[index];<br>              var line = obj.key + “ = “ + String(obj.value).substr(0, 100);<br>              var $li = document.createElement(“li”);<br>              var $Txt = document.createTextNode(line);<br>              $li.appendChild($Txt);<br>              $detail.appendChild($li);<br>            }<br>            $(“#fp-results”).removeClass(“invisible”);<br>        });<br>    }<br>    $(function () {<br>      $(“#btn-get-fp”).on(“click”, function () { fingerprintReport() });<br>    });<br></script></p>
-<style>
-.invisible {
-    display: none;
-}
-</style>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.0/fingerprint2.min.js"></script>
+<script type="text/javascript">
+  var fingerprintReport = function () {
+    var d1 = new Date();
+    Fingerprint2.get(function (components) {
+      var murmur = Fingerprint2.x64hash128(components.map(function (pair) { return pair.value }).join(), 31)
+      var d2 = new Date();
+      var time = d2 - d1;
+      var $detail = document.querySelector("#fp-details");
+      document.querySelector("#fp-time").textContent = time;
+      document.querySelector("#fp-value").textContent = murmur;
+      for (var index in components) {
+        var obj = components[index];
+        var line = obj.key + " = " + String(obj.value).substr(0, 100);
+        var $li = document.createElement("li");
+        var $Txt = document.createTextNode(line);
+        $li.appendChild($Txt);
+        $detail.appendChild($li);
+      }
+      $("#fp-results").removeClass("invisible");
+    });
+  }
+  $(function () {
+    $("#btn-get-fp").on("click", function () { fingerprintReport() });
+  });
+</script>
       
 
       
