@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Tomo&#39;s blog">
 <meta property="og:description" content="利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-21T01:39:15.413Z">
+<meta property="og:updated_time" content="2019-05-21T02:27:02.799Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="test fingerprintjs2">
 <meta name="twitter:description" content="利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。">
@@ -177,18 +177,33 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。<br><a id="more"></a></p>
-<p><style><br>.invisible {<br>    display: none;<br>}<br></style></p>
+<p><style><br>.invisible {<br>    display: none;<br>}</p>
+<p>#fp-details {<br>  list-style-type: decimal-leading-zero;<br>}<br></style></p>
 <p><button type="button" class="btn btn-info" id="btn-get-fp">点击再次生成指纹</button></p>
 <p><div id="fp-results" class="invisible"><br>    <div>Your browser fingerprint:<br><strong id="fp-value"></strong><br>    </div><br>    <div>用时: <b id="fp-time"></b> ms</div><br>    <div>详细采集字段如下：</div><br>    <ul id="fp-details"></ul><br></div></p>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.0/fingerprint2.min.js"></script>
 <script type="text/javascript">
+  function removeAllChild (id) {
+    var $parent = document.querySelector("#" + id);
+    while($parent.hasChildNodes()) //当div下还存在子节点时 循环继续
+    {
+        $parent.removeChild($parent.firstChild);
+    }
+  }
   var fingerprintReport = function () {
     var d1 = new Date();
-    Fingerprint2.get(function (components) {
+    Fingerprint2.get({
+      excludes: {
+        canvas: true,
+        webgl: true,
+        webglVendorAndRenderer: true,
+        enumerateDevices: true
+      }
+    }, function (components) {
       var murmur = Fingerprint2.x64hash128(components.map(function (pair) { return pair.value }).join(), 31)
       var d2 = new Date();
       var time = d2 - d1;
-      var $detail = document.querySelector("#fp-details");
+      removeAllChild("fp-details");
       document.querySelector("#fp-time").textContent = time;
       document.querySelector("#fp-value").textContent = murmur;
       for (var index in components) {
@@ -456,15 +471,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">eslint HTML/CSS/JS Prettify</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Eclipse</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Luna</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">eslint HTML/CSS/JS Prettify</a>
               </li>
              
               <li class="article-tag-list-item">
