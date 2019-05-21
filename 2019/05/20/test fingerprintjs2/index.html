@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Tomo&#39;s blog">
 <meta property="og:description" content="利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-21T00:36:07.015Z">
+<meta property="og:updated_time" content="2019-05-21T00:44:33.600Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="test fingerprintjs2">
 <meta name="twitter:description" content="利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。">
@@ -179,10 +179,8 @@
         <p>利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。<br><a id="more"></a></p>
 <p><button type="button" class="btn btn-info" id="btn-get-fp">点击按钮生成你的浏览器指纹</button></p>
 <p><div id="fp-results" class="invisible"><br>    <br><br>    <div>Your browser fingerprint:<pre><strong id="fp-value"></strong></pre><br>    </div><br>    <p>用时: <b id="fp-time"></b> ms</p><br>    <p>详细采集字段如下：</p><br>    <ul id="fp-details"></ul><br></div></p>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.0/fingerprint2.min.js"></script>
-
-<p><div id="fp-result"></div></p>
-<p><script><br>var fingerprintReport = function () {<br>    var d1 = new Date();<br>    Fingerprint2.get(function (components) {<br>        var murmur = Fingerprint2.x64hash128(components.map(function (pair) { return pair.value }).join(), 31)<br>        var d2 = new Date();<br>        var time = d2 - d1;<br>        var $result = document.querySelector(“#fp-results”);<br>        document.querySelector(“#fp-time”).textContent = time;<br>        document.querySelector(“#fp-value”).textContent = murmur;<br>        for (var index in components) {<br>          var obj = components[index];<br>          var line = obj.key + “ = “ + String(obj.value).substr(0, 100);<br>          var $li = document.createElement(“li”);<br>          var $Txt = document.createTextNode(line);<br>          $li.appendChild($Txt);<br>          $result.appendChild($li);<br>        }<br>        $(“#fp-results”).removeClass(“invisible”);<br>    });<br>}<br>$(function () {<br>  $(“#btn-get-fp”).on(“click”, function () { fingerprintReport() });<br>});<br></script></p>
+<p><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.0/fingerprint2.min.js"></script></p>
+<p><script><br>    var fingerprintReport = function () {<br>        var d1 = new Date();<br>        Fingerprint2.get(function (components) {<br>            var murmur = Fingerprint2.x64hash128(components.map(function (pair) { return pair.value }).join(), 31)<br>            var d2 = new Date();<br>            var time = d2 - d1;<br>            var $detail = document.querySelector(“#fp-details”);<br>            document.querySelector(“#fp-time”).textContent = time;<br>            document.querySelector(“#fp-value”).textContent = murmur;<br>            for (var index in components) {<br>              var obj = components[index];<br>              var line = obj.key + “ = “ + String(obj.value).substr(0, 100);<br>              var $li = document.createElement(“li”);<br>              var $Txt = document.createTextNode(line);<br>              $li.appendChild($Txt);<br>              $detail.appendChild($li);<br>            }<br>            $(“#fp-results”).removeClass(“invisible”);<br>        });<br>    }<br>    $(function () {<br>      $(“#btn-get-fp”).on(“click”, function () { fingerprintReport() });<br>    });<br></script></p>
 <style>
 .invisible {
     display: none;
@@ -428,15 +426,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">eslint HTML/CSS/JS Prettify</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Eclipse</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Luna</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">eslint HTML/CSS/JS Prettify</a>
               </li>
              
               <li class="article-tag-list-item">
