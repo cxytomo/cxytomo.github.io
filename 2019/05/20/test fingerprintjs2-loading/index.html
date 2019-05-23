@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="http://www.tomo.im">
   <title>test fingerprintjs2 | Tomo&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="页面加载完后，利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。">
+  <meta name="description" content="页面载入时，利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="test fingerprintjs2">
-<meta property="og:url" content="http://www.tomo.im/2019/05/20/test fingerprintjs2页面加载完后生成/index.html">
+<meta property="og:url" content="http://www.tomo.im/2019/05/20/test fingerprintjs2-loading/index.html">
 <meta property="og:site_name" content="Tomo&#39;s blog">
-<meta property="og:description" content="页面加载完后，利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。">
+<meta property="og:description" content="页面载入时，利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-23T02:06:41.572Z">
+<meta property="og:updated_time" content="2019-05-23T02:07:04.932Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="test fingerprintjs2">
-<meta name="twitter:description" content="页面加载完后，利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。">
+<meta name="twitter:description" content="页面载入时，利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。">
   
   
     <link rel="icon" href="/img/avatar.jpg">
@@ -156,7 +156,7 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-test fingerprintjs2页面加载完后生成" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-test fingerprintjs2-loading" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -168,7 +168,7 @@
   
 
         
-        <a href="/2019/05/20/test fingerprintjs2页面加载完后生成/" class="archive-article-date">
+        <a href="/2019/05/20/test fingerprintjs2-loading/" class="archive-article-date">
   	<time datetime="2019-05-20T08:21:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-20</time>
 </a>
         
@@ -176,11 +176,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>页面加载完后，利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。<br><a id="more"></a></p>
+        <p>页面载入时，利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。<br><a id="more"></a></p>
 <p><style><br>.invisible {<br>    display: none;<br>}</p>
 <p>#fp-details {<br>  list-style-type: decimal-leading-zero;<br>}<br></style></p>
-<p><button type="button" class="btn btn-info" id="btn-get-fp">点击生成指纹</button></p>
-<p><div id="fp-results" class="invisible"><br>    <div>Your browser fingerprint:<br><strong id="fp-value"></strong><br>    </div><br>    <div>页面加载完用时: <b id="fp-time-2"></b> ms</div><br>    <div>详细采集字段如下：</div><br>    <ul id="fp-details"></ul><br></div></p>
+<p><div id="fp-results" class="invisible"><br>    <div>Your browser fingerprint:<br><strong id="fp-value"></strong><br>    </div><br>    <div>页面载入时用时: <b id="fp-time-1"></b> ms</div><br>    <div>详细采集字段如下：</div><br>    <ul id="fp-details"></ul><br></div></p>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.0/fingerprint2.min.js"></script>
 <script type="text/javascript">
   function removeAllChild (id) {
@@ -219,9 +218,15 @@
     });
   };
 
-  window.onload = function (){
-    document.querySelector("#btn-get-fp").addEventListener("click", function () { fingerprintReport("fp-time-2"); });
-  };
+  if (window.requestIdleCallback) {
+    requestIdleCallback(function () {
+      fingerprintReport("fp-time-1");
+    });
+  } else {
+    setTimeout(function () {
+      fingerprintReport("fp-time-1");
+    }, 500);
+  }
 </script>
       
 
@@ -317,7 +322,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://www.tomo.im/2019/05/20/test fingerprintjs2页面加载完后生成/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://www.tomo.im/2019/05/20/test fingerprintjs2-loading/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -331,18 +336,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/05/20/test fingerprintjs2页面载入时生成/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          test fingerprintjs2
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/09/27/test-acceleration/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">test acceleration</div>
+    <a href="/2019/05/20/test fingerprintjs2-loaded/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">test fingerprintjs2</div>
       <i class="icon-circle-right"></i>
     </a>
   
