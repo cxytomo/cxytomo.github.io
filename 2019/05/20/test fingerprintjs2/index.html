@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Tomo&#39;s blog">
 <meta property="og:description" content="利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-21T02:33:50.855Z">
+<meta property="og:updated_time" content="2019-05-23T01:58:29.536Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="test fingerprintjs2">
 <meta name="twitter:description" content="利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。">
@@ -180,7 +180,7 @@
 <p><style><br>.invisible {<br>    display: none;<br>}</p>
 <p>#fp-details {<br>  list-style-type: decimal-leading-zero;<br>}<br></style></p>
 <p><button type="button" class="btn btn-info" id="btn-get-fp">点击再次生成指纹</button></p>
-<p><div id="fp-results" class="invisible"><br>    <div>Your browser fingerprint:<br><strong id="fp-value"></strong><br>    </div><br>    <div>用时: <b id="fp-time"></b> ms</div><br>    <div>详细采集字段如下：</div><br>    <ul id="fp-details"></ul><br></div></p>
+<p><div id="fp-results" class="invisible"><br>    <div>Your browser fingerprint:<br><strong id="fp-value"></strong><br>    </div><br>    <div>页面载入时用时: <b id="fp-time-1"></b> ms</div><br>    <div>页面加载完用时: <b id="fp-time-2"></b> ms</div><br>    <div>详细采集字段如下：</div><br>    <ul id="fp-details"></ul><br></div></p>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.0/fingerprint2.min.js"></script>
 <script type="text/javascript">
   function removeAllChild (id) {
@@ -190,7 +190,7 @@
         $parent.removeChild($parent.firstChild);
     }
   }
-  var fingerprintReport = function () {
+  var fingerprintReport = function (timeWrap) {
     var d1 = new Date();
     Fingerprint2.get({
       excludes: {
@@ -205,7 +205,7 @@
       var time = d2 - d1;
       var $detail = document.querySelector("#fp-details");
       removeAllChild("fp-details");
-      document.querySelector("#fp-time").textContent = time;
+      document.querySelector("#" + timeWrap).textContent = time;
       document.querySelector("#fp-value").textContent = murmur;
       for (var index in components) {
         var obj = components[index];
@@ -221,15 +221,15 @@
 
   if (window.requestIdleCallback) {
     requestIdleCallback(function () {
-      fingerprintReport();
-    })
+      fingerprintReport("fp-time-1");
+    });
   } else {
     setTimeout(function () {
-      fingerprintReport();  
-    }, 500)
+      fingerprintReport("fp-time-1");
+    }, 500);
   }
   window.onload = function (){
-    document.querySelector("#btn-get-fp").addEventListener("click", function () { fingerprintReport(); });
+    document.querySelector("#btn-get-fp").addEventListener("click", function () { fingerprintReport("fp-time-2"); });
   };
 </script>
       
@@ -468,15 +468,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Eclipse</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Luna</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -488,11 +488,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">其他</a>
+                <a href="javascript:void(0)" class="js-tag color4">tracking</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">tracking</a>
+                <a href="javascript:void(0)" class="js-tag color3">其他</a>
               </li>
             
             <div class="clearfix"></div>
