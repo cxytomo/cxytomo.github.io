@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://www.tomo.im">
-  <title>Tomo&#39;s blog</title>
+  <title>test fingerprintjs2 | Tomo&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Tomo&#39;s blog">
-<meta property="og:url" content="http://www.tomo.im/page/2/index.html">
+  <meta name="description" content="利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="test fingerprintjs2">
+<meta property="og:url" content="http://www.tomo.im/2019/05/20/test fingerprintjs2页面加载完后生成/index.html">
 <meta property="og:site_name" content="Tomo&#39;s blog">
+<meta property="og:description" content="利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-05-23T02:04:50.500Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tomo&#39;s blog">
+<meta name="twitter:title" content="test fingerprintjs2">
+<meta name="twitter:description" content="利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。">
   
   
     <link rel="icon" href="/img/avatar.jpg">
@@ -152,217 +156,101 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-how-to-introduce-yourself-in-english" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-test fingerprintjs2页面加载完后生成" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/07/01/how-to-introduce-yourself-in-english/">How to introduce yourself in English</a>
+    <h1 class="article-title" itemprop="name">
+      test fingerprintjs2
     </h1>
   
 
         
-        <a href="/2014/07/01/how-to-introduce-yourself-in-english/" class="archive-article-date">
-  	<time datetime="2014-07-01T06:16:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2014-07-01</time>
+        <a href="/2019/05/20/test fingerprintjs2页面加载完后生成/" class="archive-article-date">
+  	<time datetime="2019-05-20T08:21:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-20</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>It’s summer. Someone’s gonna find an intern.</p>
-<p>I have had 3 interviews so far, two of which require English self-introduction. First time, I didn’t prepare earlier, so I said directly what I could think of. It’s kinda disaster. No structure, halt, looking out of the window.</p>
-<p>The second time, I conclude my previous experience and prepare the introduction earlier. The pragraghs below is my self-introduction.<br>
-        
-          <a class="article-more-a" href="/2014/07/01/how-to-introduce-yourself-in-english/#more">more >></a>
-        
+        <p>利用fingerprintjs2 生成浏览器指纹，点击查看全文，来测一下你的浏览器指纹吧。<br><a id="more"></a></p>
+<p><style><br>.invisible {<br>    display: none;<br>}</p>
+<p>#fp-details {<br>  list-style-type: decimal-leading-zero;<br>}<br></style></p>
+<p><button type="button" class="btn btn-info" id="btn-get-fp">点击生成指纹</button></p>
+<p><div id="fp-results" class="invisible"><br>    <div>Your browser fingerprint:<br><strong id="fp-value"></strong><br>    </div><br>    <div>页面加载完用时: <b id="fp-time-2"></b> ms</div><br>    <div>详细采集字段如下：</div><br>    <ul id="fp-details"></ul><br></div></p>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.0/fingerprint2.min.js"></script>
+<script type="text/javascript">
+  function removeAllChild (id) {
+    var $parent = document.querySelector("#" + id);
+    while($parent.hasChildNodes()) //当div下还存在子节点时 循环继续
+    {
+        $parent.removeChild($parent.firstChild);
+    }
+  }
+  var fingerprintReport = function (timeWrap) {
+    var d1 = new Date();
+    Fingerprint2.get({
+      excludes: {
+        canvas: true,
+        webgl: true,
+        webglVendorAndRenderer: true,
+        enumerateDevices: true
+      }
+    }, function (components) {
+      var murmur = Fingerprint2.x64hash128(components.map(function (pair) { return pair.value }).join(), 31)
+      var d2 = new Date();
+      var time = d2 - d1;
+      var $detail = document.querySelector("#fp-details");
+      removeAllChild("fp-details");
+      document.querySelector("#" + timeWrap).textContent = time;
+      document.querySelector("#fp-value").textContent = murmur;
+      for (var index in components) {
+        var obj = components[index];
+        var line = obj.key + " = " + String(obj.value).substr(0, 100);
+        var $li = document.createElement("li");
+        var $Txt = document.createTextNode(line);
+        $li.appendChild($Txt);
+        $detail.appendChild($li);
+      }
+      document.querySelector("#fp-results").className = "";
+    });
+  };
+
+  window.onload = function (){
+    document.querySelector("#btn-get-fp").addEventListener("click", function () { fingerprintReport("fp-time-2"); });
+  };
+</script>
       
 
       
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/interview//" class="article-tag-list-link color5">interview</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/interview/English//" class="article-tag-list-link color3">English</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2014/07/01/how-to-introduce-yourself-in-english/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/alipay.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-chat-on-skype" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/06/24/chat-on-skype/">Chat on Skype</a>
-    </h1>
-  
-
-        
-        <a href="/2014/06/24/chat-on-skype/" class="archive-article-date">
-  	<time datetime="2014-06-24T08:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2014-06-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>I always want to find someone to talk on Skype. But always fail. </p>
-<p>I once have someone, but only talked once. I thought we had a good time. However,she never sends any message to me since then. Is she think that I’m a freak? Am I mad? No, definitely no.</p>
-<p>Then, I begin the long way to find a talker. Americans or Canadians are my primary choices. Thanks to the time difference, I never succeed.<br>
-        
-          <a class="article-more-a" href="/2014/06/24/chat-on-skype/#more">more >></a>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/English//" class="article-tag-list-link color3">English</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/English/Life//" class="article-tag-list-link color5">Life</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/English/Life/Skype//" class="article-tag-list-link color1">Skype</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2014/06/24/chat-on-skype/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-differences-between-python-and-js-in-class" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2013/07/31/differences-between-python-and-js-in-class/">Python 和 JS 的不同点___类</a>
-    </h1>
-  
-
-        
-        <a href="/2013/07/31/differences-between-python-and-js-in-class/" class="archive-article-date">
-  	<time datetime="2013-07-31T05:28:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2013-07-31</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Python和JS有很多的不同点，最近看到了类，就总结一下在类上它们有什么不同。</p>
-<pre>
-__block1__
-
-#Python
-__metaclass__=type #新式类
-class SongBird:
-    song = 'squawk'
-    def sing(self):
-        print self.song
-
-#新建一个实例
-bd = SongBird()
-bd.sing()
-#squawk
-</pre>
-        
-          <a class="article-more-a" href="/2013/07/31/differences-between-python-and-js-in-class/#more">more >></a>
-        
-      
-
       
     </div>
     <div class="article-info article-info-index">
@@ -376,26 +264,90 @@ bd.sing()
         		<li class="article-tag-list-item">
         			<a href="/categories/javascript//" class="article-tag-list-link color1">javascript</a>
         		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/javascript/Python//" class="article-tag-list-link color2">Python</a>
-        		</li>
       		
 		</ul>
 	</div>
 
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2013/07/31/differences-between-python-and-js-in-class/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://www.tomo.im/2019/05/20/test fingerprintjs2页面加载完后生成/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2019/05/20/test fingerprintjs2页面载入时生成/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          test fingerprintjs2
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/09/27/test-acceleration/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">test acceleration</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -415,587 +367,14 @@ bd.sing()
 
 
 
-
-  
-    <article id="post-css-transfrom-3d" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2013/07/15/css-transfrom-3d/">CSS Transfrom 3D</a>
-    </h1>
-  
-
-        
-        <a href="/2013/07/15/css-transfrom-3d/" class="archive-article-date">
-  	<time datetime="2013-07-15T07:36:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2013-07-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>博客头部用了一个3D效果的幻灯片，它的制作其实很简单，主要分为两部分：一是在父元素上做好3D视角视距的准备，二是子元素在3D空间的位置摆放。</p>
-<p>####前期准备（父元素）:</p>
-<pre>
-transform-style: flat | preserve-3d
-</pre>
-
-<p>flat表示子元素位于父元素平面内，preserve-3d表示子元素在3维空间内。<br>
-        
-          <a class="article-more-a" href="/2013/07/15/css-transfrom-3d/#more">more >></a>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/css//" class="article-tag-list-link color4">css</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2013/07/15/css-transfrom-3d/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-css-small-picture-vertically-and-horizontally-centerin-larger-containers" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2013/05/21/css-small-picture-vertically-and-horizontally-centerin-larger-containers/">css-实现小图片在大容器中垂直水平居中</a>
-    </h1>
-  
-
-        
-        <a href="/2013/05/21/css-small-picture-vertically-and-horizontally-centerin-larger-containers/" class="archive-article-date">
-  	<time datetime="2013-05-21T04:40:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2013-05-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>19号阿里巴巴的笔试题中有一题是这样的：当图片小于容器时用css实现水平垂直居中，当时特没水准得写了:</p>
-<pre>img {
-    margin: auto auto;
-}</pre>
-
-<p>单纯的想到使div水平居中可以用</p>
-<pre>div {
-    margin: 0 auto;
-}</pre>
-
-<p>img是行内元素，设置margin: auto也不起作用。<br>
-        
-          <a class="article-more-a" href="/2013/05/21/css-small-picture-vertically-and-horizontally-centerin-larger-containers/#more">more >></a>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/css//" class="article-tag-list-link color4">css</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/css/html//" class="article-tag-list-link color5">html</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2013/05/21/css-small-picture-vertically-and-horizontally-centerin-larger-containers/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-guess-letter-game-based-on-canvas" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2013/04/11/guess-letter-game-based-on-canvas/">canvas 做的猜字游戏</a>
-    </h1>
-  
-
-        
-        <a href="/2013/04/11/guess-letter-game-based-on-canvas/" class="archive-article-date">
-  	<time datetime="2013-04-11T12:21:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2013-04-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>用HTML5 canvas 做的小游戏，猜字母。字母为电脑随机产生的a到z之间的一个字母，一共有3次机会(可以修改)，并且每次猜测之后都会有提示，正确的字母会在游戏结束后显示。下面为主界面，它是由canvas的toDataURL()方法导出的图片。</p>
-<p><a href="http://ww3.sinaimg.cn/large/6f3b4a67jw1e52y379j4jj20et0a7q3l.jpg" target="_blank" rel="noopener"><img src="http://ww3.sinaimg.cn/large/6f3b4a67jw1e52y379j4jj20et0a7q3l.jpg" alt="download"></a><br>
-        
-          <a class="article-more-a" href="/2013/04/11/guess-letter-game-based-on-canvas/#more">more >></a>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Canvas//" class="article-tag-list-link color2">Canvas</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2013/04/11/guess-letter-game-based-on-canvas/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-alt-and-title-attributes-of-img" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2013/04/10/alt-and-title-attributes-of-img/">&lt;img&gt;标签的alt和title属性</a>
-    </h1>
-  
-
-        
-        <a href="/2013/04/10/alt-and-title-attributes-of-img/" class="archive-article-date">
-  	<time datetime="2013-04-10T12:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2013-04-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="http://ww1.sinaimg.cn/large/6f3b4a67gw1e531tjpl7aj207508b3yk.jpg" target="_blank" rel="noopener"><img src="http://ww1.sinaimg.cn/large/6f3b4a67gw1e531tjpl7aj207508b3yk.jpg" alt="collapse list"></a></p>
-<p>上图是一个可折叠的list@dribbble，它由四个带链接的图片组成。注意到上面的类似于tooltip的文字，它是<code>&lt;img&gt;</code>的<code>title</code>属性起得作用，当然IE下情况有所不同。<br>
-        
-          <a class="article-more-a" href="/2013/04/10/alt-and-title-attributes-of-img/#more">more >></a>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/html//" class="article-tag-list-link color5">html</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2013/04/10/alt-and-title-attributes-of-img/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-visuals-vs-text" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2013/04/08/visuals-vs-text/">visuals vs text</a>
-    </h1>
-  
-
-        
-        <a href="/2013/04/08/visuals-vs-text/" class="archive-article-date">
-  	<time datetime="2013-04-08T13:10:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2013-04-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><span style="font-size: 1rem; line-height: 1.714285714;">每次在食堂吃完饭，就要端着盘子去一条长长的滚动条那儿放盘子以及将筷子和勺子分别放到相应的铁盒里回收，铁盒不大，分别有“筷子”、”勺子“的字样。每次分类前总是要犹豫一下，遇到人多的时候，一不小心就会放错；但是，在食堂的另一边，有两个大大的塑料盒子分别用来放筷子和勺子，没有贴分类标签，放之前能很清楚的看到里面放了什么。这时候我好像几乎没有犹豫过，哪个归哪个。</span><br>
-        
-          <a class="article-more-a" href="/2013/04/08/visuals-vs-text/#more">more >></a>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">其他</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2013/04/08/visuals-vs-text/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-html5-canvas-examples" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2013/03/21/html5-canvas-examples/">HTML5 canvas 实例</a>
-    </h1>
-  
-
-        
-        <a href="/2013/03/21/html5-canvas-examples/" class="archive-article-date">
-  	<time datetime="2013-03-21T07:54:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2013-03-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>用THML5 canvas 画了一个表示幻灯片的icon(100px * 78px)@<a href="http://speakerdeck.com" target="_blank" rel="noopener">speakerdeck.com</a></p>
-<p><a href="http://ww1.sinaimg.cn/large/6f3b4a67gw1e5339ugzp3j205f04sa9v.jpg" target="_blank" rel="noopener"><img src="http://ww1.sinaimg.cn/large/6f3b4a67gw1e5339ugzp3j205f04sa9v.jpg" alt="Screen Shot 2013-03-20 at 下午7.46.37"></a></p>
-<p>这个icon的绘制首先要选中canvas元素，然后设定它的绘制环境，此时是在向量图环境下 //cont=canv.getContext (‘2d’)，接下来就要绘制路径，用到的方法可以参考<a href="http://tomo.im/?p=299" title="vectors vs bitmaps" target="_blank" rel="noopener">vectors vs bitmaps </a>。对于arc()需要再仔细看一下。<br>
-        
-          <a class="article-more-a" href="/2013/03/21/html5-canvas-examples/#more">more >></a>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/HTML5//" class="article-tag-list-link color1">HTML5</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/HTML5/Canvas//" class="article-tag-list-link color2">Canvas</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2013/03/21/html5-canvas-examples/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-differences-between-slice-and-splice" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2012/10/27/differences-between-slice-and-splice/">slice() 与splice()的区别</a>
-    </h1>
-  
-
-        
-        <a href="/2012/10/27/differences-between-slice-and-splice/" class="archive-article-date">
-  	<time datetime="2012-10-27T13:19:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2012-10-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>array.slice(start, end)方法是对array中的一段做浅复制,复制的元素从 start 开始，到 end 为止，但是<em><strong>不包括 end</strong></em>，函数返回这一段字数组。</p>
-<pre style="padding-left: 30px;">    var a = [1, 2, 3];</pre>
-
-<ul>
-<li>end省略时，表示提取start及其后面的所有成员。</li>
-</ul>
-<pre style="padding-left: 60px;">var b = a.slice(1);//b = [2,3]</pre>
-
-<ul>
-<li>如果两个参数中的任何一个为负，该参数，假设为 -n 表示的是从数组尾开始倒数的第n个成员。</li>
-</ul>
-<pre style="padding-left: 60px;">
-var c = a.slice(-3, -1);//c = [1, 2]
-var d = a.slice(-3, 1 );//d = [1]</pre>
-
-<p>注：如果你选的成员的顺序有悖于数组(即从后往前取)，则会返回一个新的空数组。<br>
-        
-          <a class="article-more-a" href="/2012/10/27/differences-between-slice-and-splice/#more">more >></a>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2012/10/27/differences-between-slice-and-splice/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -1018,8 +397,8 @@ var d = a.slice(-3, 1 );//d = [1]</pre>
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
