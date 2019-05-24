@@ -8,20 +8,20 @@
   <link rel="dns-prefetch" href="http://www.tomo.im">
   <title>eslint +  HTML/CSS/JS Prettify 使用经验（js格式修改） | Tomo&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="公司质量部整了一套自己的前端代码规范，部门要求6月底前改完，因为月初和月末会统计代码质量。 虽然规范里面罗列了较多的条款，但是通过Jenkins上扫出来的high和normal级别的问题，基本集中在： 1. 缩进问题，以及`tab`和空格混用（公司规范要求一次缩进为4个空格） 2. 一行限制120个字符，超过需要跨行显示 3. js中使用单引号 4. 变量定义或者赋值了却没有使用，需要去除，函数传">
+  <meta name="description" content="公司质量部整了一套自己的前端代码规范， 下面是eslint和 HTML/CSS/JS Prettify 的使用经验，仅留作备忘。 1.安装eslint 1npm install -g eslint 2.初始化配置文件，生成默认的配置文件 1eslint --init  3.检测文件 1eslint 你的文件（可以拖拽文件到命令行窗口） 当然也可以在项目中安装eslint，在项目中进行个性化配置。">
 <meta name="keywords" content="eslint HTML&#x2F;CSS&#x2F;JS Prettify">
 <meta property="og:type" content="article">
 <meta property="og:title" content="eslint +  HTML&#x2F;CSS&#x2F;JS Prettify 使用经验（js格式修改）">
 <meta property="og:url" content="http://www.tomo.im/2017/06/23/eslint-html-css-js-prettify-experience-js-format-change/index.html">
 <meta property="og:site_name" content="Tomo&#39;s blog">
-<meta property="og:description" content="公司质量部整了一套自己的前端代码规范，部门要求6月底前改完，因为月初和月末会统计代码质量。 虽然规范里面罗列了较多的条款，但是通过Jenkins上扫出来的high和normal级别的问题，基本集中在： 1. 缩进问题，以及`tab`和空格混用（公司规范要求一次缩进为4个空格） 2. 一行限制120个字符，超过需要跨行显示 3. js中使用单引号 4. 变量定义或者赋值了却没有使用，需要去除，函数传">
+<meta property="og:description" content="公司质量部整了一套自己的前端代码规范， 下面是eslint和 HTML/CSS/JS Prettify 的使用经验，仅留作备忘。 1.安装eslint 1npm install -g eslint 2.初始化配置文件，生成默认的配置文件 1eslint --init  3.检测文件 1eslint 你的文件（可以拖拽文件到命令行窗口） 当然也可以在项目中安装eslint，在项目中进行个性化配置。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://user-image.logdown.io/user/3109/blog/3134/post/1969170/HA2j7i6jTGytvtGB7m7f_%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20170623112250.png">
 <meta property="og:image" content="http://user-image.logdown.io/user/3109/blog/3134/post/1969170/806jbO1dSnyvT6Sdo0rr_%E6%89%AB%E9%94%99.png">
-<meta property="og:updated_time" content="2017-08-07T09:01:58.790Z">
+<meta property="og:updated_time" content="2019-05-24T07:20:29.705Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="eslint +  HTML&#x2F;CSS&#x2F;JS Prettify 使用经验（js格式修改）">
-<meta name="twitter:description" content="公司质量部整了一套自己的前端代码规范，部门要求6月底前改完，因为月初和月末会统计代码质量。 虽然规范里面罗列了较多的条款，但是通过Jenkins上扫出来的high和normal级别的问题，基本集中在： 1. 缩进问题，以及`tab`和空格混用（公司规范要求一次缩进为4个空格） 2. 一行限制120个字符，超过需要跨行显示 3. js中使用单引号 4. 变量定义或者赋值了却没有使用，需要去除，函数传">
+<meta name="twitter:description" content="公司质量部整了一套自己的前端代码规范， 下面是eslint和 HTML/CSS/JS Prettify 的使用经验，仅留作备忘。 1.安装eslint 1npm install -g eslint 2.初始化配置文件，生成默认的配置文件 1eslint --init  3.检测文件 1eslint 你的文件（可以拖拽文件到命令行窗口） 当然也可以在项目中安装eslint，在项目中进行个性化配置。">
 <meta name="twitter:image" content="http://user-image.logdown.io/user/3109/blog/3134/post/1969170/HA2j7i6jTGytvtGB7m7f_%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20170623112250.png">
   
   
@@ -180,19 +180,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>公司质量部整了一套自己的前端代码规范，部门要求6月底前改完，因为月初和月末会统计代码质量。</p>
-<p>虽然规范里面罗列了较多的条款，但是通过<code>Jenkins</code>上扫出来的<code>high</code>和<code>normal</code>级别的问题，基本集中在：</p>
-<pre><code>1. 缩进问题，以及`tab`和空格混用（公司规范要求一次缩进为4个空格）
-2. 一行限制120个字符，超过需要跨行显示
-3. js中使用单引号
-4. 变量定义或者赋值了却没有使用，需要去除，函数传参也同理。
-</code></pre><a id="more"></a>
-<p>起初是无脑式的重复劳动，<code>sublime</code>里面安装了<code>HTML/CSS/JS Prettify</code>，但未进行深入的配置只是改了缩进配置。针对上面问题期初是这么做的：</p>
-<pre><code>1. `HTML/CSS/JS Prettify`
-2. 根据扫出来的错误提示，手动去换行。
-3. 无脑式的手动把双引号替换成单引号，由于`js`中存在`dom`元素的拼接，不能一键替换需要挨个检查。
-4. 根据扫出来的结果手动去除，每次需要上传一遍svn，在jenkins上跑一边才能检验一遍，每次扫都是整个项目，比较费时。
-</code></pre><p>手头有两个项目，第一个项目花费了很多天才改完，通过<code>eslint +  HTML/CSS/JS Prettify</code>,另外一个项目大半天就改完了。下面是<code>eslint</code>和 <code>HTML/CSS/JS Prettify</code> 的使用经验，仅留作备忘。</p>
+        <p>公司质量部整了一套自己的前端代码规范，</p>
+<p>下面是<code>eslint</code>和 <code>HTML/CSS/JS Prettify</code> 的使用经验，仅留作备忘。</p>
 <p>1.安装<code>eslint</code></p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> -g eslint</span><br></pre></td></tr></table></figure>
 <p>2.初始化配置文件，生成默认的配置文件</p>
