@@ -203,7 +203,14 @@
         'doNotTrack': true,
         // uses js fonts already
         'fontsFlash': true
-      }
+      },
+	  plugins: {
+	    // Plugin detection in at least IE 11 causing prompt for users
+	    excludeIE: true
+	  },
+	  audio: {
+	    excludeIOS11: true
+	  }
     }, function (components) {
       var murmur = Fingerprint2.x64hash128(components.map(function (pair) { return pair.value }).join(), 31)
       var d2 = new Date();
