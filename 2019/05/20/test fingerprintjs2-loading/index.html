@@ -221,7 +221,7 @@
       document.querySelector("#fp-value").textContent = murmur;
       for (var index in components) {
         var obj = components[index];
-        var line = obj.key + " = " + String(obj.value).substr(0, 100);
+        var line = obj.key + " = " + String(obj.value);
         var $li = document.createElement("li");
         var $Txt = document.createTextNode(line);
         $li.appendChild($Txt);
