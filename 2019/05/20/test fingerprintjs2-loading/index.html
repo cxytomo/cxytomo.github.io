@@ -232,7 +232,7 @@
         $detail.appendChild($li);
       }
 	    var $li2 = document.createElement("li");
-        var $Txt2 = document.createTextNode("navigator.plugins:" + navigator.plugins);
+        var $Txt2 = document.createTextNode("navigator.plugins length:" + navigator.plugins.length);
         $li.appendChild($Txt2);
         $detail.appendChild($li2);
       document.querySelector("#fp-results").className = "";
