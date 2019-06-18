@@ -32,7 +32,15 @@
   </style>
   
 
-  
+  <script async src="https://www.tomo.im.fpjs.pro/fp.js"></script>
+  <script>
+    window.fpLayer = window.fpLayer || [];
+    function fp() { fpLayer.push(arguments); }
+    fp('config', 'client', 'client-id');
+    // if you want to send data 
+    // automatically on page load
+    fp('config', 'autoSend', true);
+  </script>
 
 </head>
 </html>
