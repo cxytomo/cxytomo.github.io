@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.tomo.im","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Chrome插件是一个用Web技术开发、用来增强浏览器功能的软件，它其实就是一个由HTML、CSS、JS、图片等资源组成的一个.crx后缀的压缩包.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浏览器插件">
+<meta property="og:url" content="http://www.tomo.im/2022/02/09/2022-02-09-%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6/index.html">
+<meta property="og:site_name" content="Tomo&#39;s Blog">
+<meta property="og:description" content="Chrome插件是一个用Web技术开发、用来增强浏览器功能的软件，它其实就是一个由HTML、CSS、JS、图片等资源组成的一个.crx后缀的压缩包.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/extension/extension-1.png">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/extension/extension-2.png">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/extension/extension-3.png">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/extension/extension-4.png">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/extension/extension-5.png">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/extension/extension-6.png">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/extension/extension-7.png">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/extension/extension-8.png">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/extension/extension-9.png">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/extension/extension-10.png">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/extension/extension-11.png">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/extension/extension-12.png">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/extension/extension-13.png">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/extension/extension-14.png">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/extension/extension-15.png">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/extension/extension-16.png">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/extension/extension-17.png">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/extension/extension-18.png">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/extension/extension-19.png">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/extension/extension-20.png">
+<meta property="article:published_time" content="2022-02-09T03:16:00.000Z">
+<meta property="article:modified_time" content="2022-04-21T05:11:53.631Z">
+<meta property="article:author" content="Tomo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.tomo.im/pic-blog/extension/extension-1.png">
+
+<link rel="canonical" href="http://www.tomo.im/2022/02/09/2022-02-09-%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>浏览器插件 | Tomo's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H4MK7VVY8K"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-H4MK7VVY8K');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Tomo's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">social phobic</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.tomo.im/2022/02/09/2022-02-09-%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tomo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tomo's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          浏览器插件
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-09 11:16:00" itemprop="dateCreated datePublished" datetime="2022-02-09T11:16:00+08:00">2022-02-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6/" itemprop="url" rel="index"><span itemprop="name">浏览器插件</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">Chrome插件是一个用Web技术开发、用来增强浏览器功能的软件，它其实就是一个由HTML、CSS、JS、图片等资源组成的一个.crx后缀的压缩包.</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="什么是浏览器插件（扩展）？"><a href="#什么是浏览器插件（扩展）？" class="headerlink" title="什么是浏览器插件（扩展）？"></a>什么是浏览器插件（扩展）？</h2><p>Chrome插件是一个用Web技术开发、用来增强浏览器功能的软件，它其实就是一个由HTML、CSS、JS、图片等资源组成的一个.crx后缀的压缩包.<br><img src="http://www.tomo.im/pic-blog/extension/extension-1.png"><img src="http://www.tomo.im/pic-blog/extension/extension-2.png"><br><img src="http://www.tomo.im/pic-blog/extension/extension-3.png"></p>
+<h2 id="为什么学习浏览器插件开发？"><a href="#为什么学习浏览器插件开发？" class="headerlink" title="为什么学习浏览器插件开发？"></a>为什么学习浏览器插件开发？</h2><p>增强浏览器功能，“定制”自己专属浏览器<br>丰富的api</p>
+<ul>
+<li>书签控制；</li>
+<li>下载控制；</li>
+<li>窗口控制；</li>
+<li>标签控制；</li>
+<li>网络请求控制，各类事件监听；</li>
+<li>自定义原生菜单；</li>
+<li>完善的通信机制；</li>
+<li>等等</li>
+</ul>
+<p>Chrome extension vs Firefox extension？<br>Firefox插件只能在firefox浏览器中使用。<br>Chrome除了Chrome、Edge浏览器之外，还可以运行在所有webkit内核的国产浏览器，比如360极速浏览器、360安全浏览器、搜狗浏览器、QQ浏览器等等，Firefox浏览器也对Chrome插件的运行提供了一定的支持。</p>
+<h2 id="怎么进行开发调试？"><a href="#怎么进行开发调试？" class="headerlink" title="怎么进行开发调试？"></a>怎么进行开发调试？</h2><p>chrome:&#x2F;&#x2F;extensions<br>edge:&#x2F;&#x2F;extensions&#x2F;     + 开发者模式</p>
+<p>manifest.json + 普通的web开发工具即可</p>
+<h3 id="5个核心概念"><a href="#5个核心概念" class="headerlink" title="5个核心概念"></a>5个核心概念</h3><ol>
+<li><p>manifest.json<br>详细配置项参见：<a target="_blank" rel="noopener" href="https://developer.chrome.com/docs/extensions/mv2/manifest/">https://developer.chrome.com/docs/extensions/mv2/manifest/</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	// 清单文件的版本</span><br><span class="line">	&quot;manifest_version&quot;: 2,</span><br><span class="line">	// 插件的名称（取package.json中的名称）</span><br><span class="line">	&quot;name&quot;: &quot;__MSG_extName__&quot;,</span><br><span class="line">	// 插件的版本</span><br><span class="line">	&quot;version&quot;: &quot;1.0.0&quot;,</span><br><span class="line">	// 插件描述</span><br><span class="line">	&quot;description&quot;: &quot;鼠标取词，简化查询流程，即时获取贯众安全威胁情报，提升分析效率。&quot;,</span><br><span class="line">	// 网站主页，不要浪费了这个免费广告位</span><br><span class="line">	&quot;homepage_url&quot;: &quot;https://tip.komect.com:9099/&quot;,</span><br><span class="line">	// 图标</span><br><span class="line">	&quot;icons&quot;:</span><br><span class="line">	&#123;</span><br><span class="line">		&quot;16&quot;: &quot;img/icon.png&quot;,</span><br><span class="line">		&quot;48&quot;: &quot;img/icon.png&quot;,</span><br><span class="line">		&quot;128&quot;: &quot;img/icon.png&quot;</span><br><span class="line">	&#125;,</span><br><span class="line">	// 会一直常驻的后台JS或后台页面</span><br><span class="line">	&quot;background&quot;:</span><br><span class="line">	&#123;</span><br><span class="line">		// 2种指定方式，如果指定JS，那么会自动生成一个背景页</span><br><span class="line">		&quot;page&quot;: &quot;background.html&quot;</span><br><span class="line">		//&quot;scripts&quot;: [&quot;js/background.js&quot;]</span><br><span class="line">	&#125;,</span><br><span class="line">	// 浏览器右上角图标设置，browser_action、page_action、app必须三选一</span><br><span class="line">	&quot;browser_action&quot;: </span><br><span class="line">	&#123;</span><br><span class="line">		&quot;default_icon&quot;: &quot;img/icon.png&quot;,</span><br><span class="line">		// 图标悬停时的标题，可选</span><br><span class="line">		&quot;default_title&quot;: &quot;这是一个示例Chrome插件&quot;,</span><br><span class="line">		&quot;default_popup&quot;: &quot;popup.html&quot;</span><br><span class="line">	&#125;,</span><br><span class="line">	// 当某些特定页面打开才显示的图标</span><br><span class="line">	/*&quot;page_action&quot;:</span><br><span class="line">	&#123;</span><br><span class="line">		&quot;default_icon&quot;: &quot;img/icon.png&quot;,</span><br><span class="line">		&quot;default_title&quot;: &quot;我是pageAction&quot;,</span><br><span class="line">		&quot;default_popup&quot;: &quot;popup.html&quot;</span><br><span class="line">	&#125;,*/</span><br><span class="line">	// 需要直接注入页面的JS</span><br><span class="line">	&quot;content_scripts&quot;: </span><br><span class="line">	[</span><br><span class="line">		&#123;</span><br><span class="line">			//&quot;matches&quot;: [&quot;http://*/*&quot;, &quot;https://*/*&quot;],</span><br><span class="line">			// &quot;&lt;all_urls&gt;&quot; 表示匹配所有地址</span><br><span class="line">			&quot;matches&quot;: [&quot;&lt;all_urls&gt;&quot;],</span><br><span class="line">			// 多个JS按顺序注入</span><br><span class="line">			&quot;js&quot;: [&quot;js/jquery-1.8.3.js&quot;, &quot;js/content-script.js&quot;],</span><br><span class="line">			// JS的注入可以随便一点，但是CSS的注意就要千万小心了，因为一不小心就可能影响全局样式</span><br><span class="line">			&quot;css&quot;: [&quot;css/custom.css&quot;],</span><br><span class="line">			// 代码注入的时间，可选值： &quot;document_start&quot;, &quot;document_end&quot;, or &quot;document_idle&quot;，最后一个表示页面空闲时，默认document_idle</span><br><span class="line">			&quot;run_at&quot;: &quot;document_start&quot;</span><br><span class="line">		&#125;,</span><br><span class="line">		// 这里仅仅是为了演示content-script可以配置多个规则</span><br><span class="line">		&#123;</span><br><span class="line">			&quot;matches&quot;: [&quot;*://*/*.png&quot;, &quot;*://*/*.jpg&quot;, &quot;*://*/*.gif&quot;, &quot;*://*/*.bmp&quot;],</span><br><span class="line">			&quot;js&quot;: [&quot;js/show-image-content-size.js&quot;]</span><br><span class="line">		&#125;</span><br><span class="line">	],</span><br><span class="line">	// 权限申请</span><br><span class="line">	&quot;permissions&quot;:</span><br><span class="line">	[</span><br><span class="line">		&quot;contextMenus&quot;, // 右键菜单</span><br><span class="line">		&quot;tabs&quot;, // 标签</span><br><span class="line">		&quot;notifications&quot;, // 通知</span><br><span class="line">		&quot;webRequest&quot;, // web请求</span><br><span class="line">		&quot;webRequestBlocking&quot;,</span><br><span class="line">		&quot;storage&quot;, // 插件本地存储</span><br><span class="line">		&quot;http://*/*&quot;, // 可以通过executeScript或者insertCSS访问的网站</span><br><span class="line">		&quot;https://*/*&quot; // 可以通过executeScript或者insertCSS访问的网站</span><br><span class="line">	],</span><br><span class="line">	// 普通页面能够直接访问的插件资源列表，如果不设置是无法直接访问的</span><br><span class="line">	&quot;web_accessible_resources&quot;: [&quot;js/inject.js”],</span><br><span class="line">	// 覆盖浏览器默认页面</span><br><span class="line">	&quot;chrome_url_overrides&quot;:</span><br><span class="line">	&#123;</span><br><span class="line">		// 覆盖浏览器默认的新标签页</span><br><span class="line">		&quot;newtab&quot;: &quot;newtab.html&quot;</span><br><span class="line">	&#125;,</span><br><span class="line">	// Chrome40以前的插件配置页写法</span><br><span class="line">	&quot;options_page&quot;: &quot;options.html&quot;,</span><br><span class="line">	// Chrome40以后的插件配置页写法，如果2个都写，新版Chrome只认后面这一个</span><br><span class="line">	&quot;options_ui&quot;:</span><br><span class="line">	&#123;</span><br><span class="line">		&quot;page&quot;: &quot;options.html&quot;,</span><br><span class="line">		// 添加一些默认的样式，推荐使用</span><br><span class="line">		&quot;chrome_style&quot;: true</span><br><span class="line">	&#125;,</span><br><span class="line">	// 向地址栏注册一个关键字以提供搜索建议，只能设置一个关键字</span><br><span class="line">	&quot;omnibox&quot;: &#123; &quot;keyword&quot; : &quot;go&quot; &#125;,</span><br><span class="line">	// 默认语言</span><br><span class="line">	&quot;default_locale&quot;: &quot;zh_CN&quot;,</span><br><span class="line">	// devtools页面入口，注意只能指向一个HTML文件，不能是JS文件</span><br><span class="line">	&quot;devtools_page&quot;: &quot;devtools.html&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>content-scripts<br>Chrome插件中向页面注入脚本的一种形式（虽然名为script，其实还可以包括css的），借助content-scripts我们可以实现通过配置的方式轻松向指定页面注入JS和CSS（如果需要动态注入，可以参考下文），最常见的比如：广告屏蔽、页面CSS定制<br>run_at为document_start（默认为document_idle）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">document.addEventListener(&#x27;DOMContentLoaded&#x27;, async function() &#123;</span><br><span class="line">  initDialog()</span><br><span class="line">  initSearchIcon()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><p>background scripts(后台脚本)<br>默认会创建一个background.html,可以理解为常驻的后台页面。<br>扩展程序是基于事件的程序，用于修改或增强 Chrome 浏览体验。 事件是浏览器触发器，例如导航到新页面、移除书签或关闭选项卡。 扩展在它们的后台脚本中监视这些事件，然后对指定的指令做出反应。<br>后台脚本可以通过配置（persistent: true&#x2F;false）表示是否一直活跃。保持后台脚本持续活跃的唯一情况是扩展程序使用 chrome.webRequest API 来阻止或修改网络请求。</p>
+</li>
+<li><p>popup （弹窗）<br>browser_action或者page_action中配置<br><img src="http://www.tomo.im/pic-blog/extension/extension-4.png"><br>生命周期短，打开时重新渲染，失去焦点立即关闭。可以直接通过chrome.extension.getBackgroundPage()获取background的window对象</p>
+</li>
+<li><p>homepage_url （插件主页，天然广告位）<br><img src="http://www.tomo.im/pic-blog/extension/extension-5.png"></p>
+</li>
+</ol>
+<h2 id="Chrome插件的8种展示形式"><a href="#Chrome插件的8种展示形式" class="headerlink" title="Chrome插件的8种展示形式"></a>Chrome插件的8种展示形式</h2><ol>
+<li><p>browserAction(浏览器右上角)<br><img src="http://www.tomo.im/pic-blog/extension/extension-6.png"><br>popup.html+tooltip(title)+badge(icon)</p>
+</li>
+<li><p>pageAction(浏览器右上角)<br><img src="http://www.tomo.im/pic-blog/extension/extension-7.png"><br>和browserAction区别在于，不可用是灰色，能根据不同页面个性化启用。（访问百度的时候可用，其他置灰不可用）<br><img src="http://www.tomo.im/pic-blog/extension/extension-8.png"><br><img src="http://www.tomo.im/pic-blog/extension/extension-9.png"></p>
+</li>
+</ol>
+<p>3、右键菜单<br>主要是通过chrome.contextMenusAPI实现</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// manifest.json</span><br><span class="line">&#123;&quot;permissions&quot;: [&quot;contextMenus&quot;]&#125;</span><br><span class="line"></span><br><span class="line">// background.js</span><br><span class="line">chrome.contextMenus.create(&#123;</span><br><span class="line">	title: “evernote web clipper”,</span><br><span class="line">	onclick: function()&#123;</span><br><span class="line">		alert(&#x27;您点击了右键菜单！&#x27;);</span><br><span class="line">		// 新建tab使用百度搜索，注意不能使用location.href，因为location是属于background的window对象</span><br><span class="line">		chrome.tabs.create(&#123;url: &#x27;https://www.baidu.com/s?ie=utf-8&amp;wd=&#x27; + encodeURI(params.selectionText)&#125;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><img src="http://www.tomo.im/pic-blog/extension/extension-10.png"><br>￼</p>
+<p>4、override(覆盖特定页面)<br>扩展可以替代如下页面：</p>
+<ul>
+<li>历史记录：从工具菜单上点击历史记录时访问的页面，或者从地址栏直接输入 chrome:&#x2F;&#x2F;history</li>
+<li>新标签页：当创建新标签的时候访问的页面，或者从地址栏直接输入 chrome:&#x2F;&#x2F;newtab</li>
+<li>书签：浏览器的书签，或者直接输入 chrome:&#x2F;&#x2F;bookmarks<br>￼<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&quot;chrome_url_overrides&quot;:</span><br><span class="line">&#123;</span><br><span class="line">	&quot;newtab&quot;: &quot;newtab.html&quot;,</span><br><span class="line">	&quot;history&quot;: &quot;history.html&quot;,</span><br><span class="line">	&quot;bookmarks&quot;: &quot;bookmarks.html&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="http://www.tomo.im/pic-blog/extension/extension-11.png"></li>
+</ul>
+<p>5、devtools<br><img src="http://www.tomo.im/pic-blog/extension/extension-12.png"><br><img src="http://www.tomo.im/pic-blog/extension/extension-13.png"></p>
+<p>每打开一个开发者工具窗口，都会创建devtools页面的实例，F12窗口关闭，页面也随着关闭，所以devtools页面的生命周期和devtools窗口是一致的。devtools页面可以访问一组特有的DevTools API以及有限的扩展API，这组特有的DevTools API只有devtools页面才可以访问，background都无权访问，这些API包括：</p>
+<ul>
+<li>chrome.devtools.panels：面板相关；</li>
+<li>chrome.devtools.inspectedWindow：获取被审查窗口的有关信息；</li>
+<li>chrome.devtools.network：获取有关网络请求的信息；<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">// manifest.json</span><br><span class="line">&#123;</span><br><span class="line">	// 只能指向一个HTML文件，不能是JS文件</span><br><span class="line">	&quot;devtools_page&quot;: &quot;devtools.html&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//devtools.html</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;script type=&quot;text/javascript&quot; src=&quot;js/devtools.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line">//devtools.js</span><br><span class="line">// 创建自定义面板，同一个插件可以创建多个自定义面板</span><br><span class="line">// 几个参数依次为：panel标题、图标（其实设置了也没地方显示）、要加载的页面、加载成功后的回调</span><br><span class="line">chrome.devtools.panels.create(&#x27;MyPanel&#x27;, &#x27;img/icon.png&#x27;, &#x27;mypanel.html&#x27;, function(panel)</span><br><span class="line">&#123;</span><br><span class="line">	console.log(&#x27;自定义面板创建成功！&#x27;); // 注意这个log一般看不到</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 创建自定义侧边栏</span><br><span class="line">chrome.devtools.panels.elements.createSidebarPane(&quot;Images&quot;, function(sidebar)</span><br><span class="line">&#123;</span><br><span class="line">	// sidebar.setPage(&#x27;../sidebar.html&#x27;); // 指定加载某个页面</span><br><span class="line">	sidebar.setExpression(&#x27;document.querySelectorAll(&quot;img&quot;)&#x27;, &#x27;All Images&#x27;); // 通过表达式来指定</span><br><span class="line">	//sidebar.setObject(&#123;aaa: 111, bbb: &#x27;Hello World!&#x27;&#125;); // 直接设置显示某个对象</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<img src="http://www.tomo.im/pic-blog/extension/extension-14.png"></li>
+</ul>
+<p>6、option(选项页)<br>插件的设置页面</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	// Chrome40以前的插件配置页写法</span><br><span class="line">	&quot;options_page&quot;: &quot;options.html&quot;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>7、omnibox<br>注册某个关键字+tab，以触发插件自己的搜索建议界面，然后可以任意发挥了。<br><img src="http://www.tomo.im/pic-blog/extension/extension-15.png"></p>
+<p>监听onInputChanged&#x2F;onInputEntered等 —&gt;  微博（新浪、腾讯、搜狐）—&gt;获取activetab —&gt; 手动改url</p>
+<p>8、桌面通知<br>Chrome提供了一个chrome.notificationsAPI以便插件推送桌面通知。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">chrome.notifications.create(null, &#123;</span><br><span class="line">	type: &#x27;basic&#x27;,</span><br><span class="line">	iconUrl: &#x27;img/icon.png&#x27;,</span><br><span class="line">	title: &#x27;这是标题&#x27;,</span><br><span class="line">	message: &#x27;您刚才点击了自定义右键菜单！&#x27;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>消息通信<br>Content-script植入页面，直接发送请求涉及跨域。所以需要通过于其他部分通信<br><img src="http://www.tomo.im/pic-blog/extension/extension-16.png"><br>￼<br>通常通过backgroundjs进行通信<br>popup可以直接调用background中的JS方法，也可以直接访问background的DOM<br><img src="http://www.tomo.im/pic-blog/extension/extension-17.png"></p>
+<p>短连接<br> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">// 发送请求</span><br><span class="line">// content-script 发送请求</span><br><span class="line">chrome.runtime.sendMessage(&#123;greeting: &quot;hello&quot;&#125;, function(response) &#123;</span><br><span class="line">  console.log(response.farewell);</span><br><span class="line">&#125;);</span><br><span class="line">// 插件向content-script发送请求</span><br><span class="line">chrome.tabs.query(&#123;active: true, currentWindow: true&#125;, function(tabs) &#123;</span><br><span class="line">  chrome.tabs.sendMessage(tabs[0].id, &#123;greeting: &quot;hello&quot;&#125;, function(response) &#123;</span><br><span class="line">    console.log(response.farewell);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//接受请求</span><br><span class="line">chrome.runtime.onMessage.addListener(</span><br><span class="line">  function(request, sender, sendResponse) &#123;</span><br><span class="line">    console.log(sender.tab ?</span><br><span class="line">                &quot;from a content script:&quot; + sender.tab.url :</span><br><span class="line">                &quot;from the extension&quot;);</span><br><span class="line">    if (request.greeting === &quot;hello&quot;)</span><br><span class="line">      sendResponse(&#123;farewell: &quot;goodbye&quot;&#125;);</span><br><span class="line">      // return true;(异步，否则同步)</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>如果有多个页面监听消息（onMessage），谁最先执行sendResponse谁就赢，其余监听的回调会被忽略</p>
+<p>长连接（类似WebSocket会一直建立连接，双方可以随时互发消息。）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">// 发起长连接runtime.connect 或者 tabs.connect或者runtime.connectNative</span><br><span class="line">// content-script发起</span><br><span class="line">var port = chrome.runtime.connect(&#123;name: &quot;knockknock&quot;&#125;);</span><br><span class="line">port.postMessage(&#123;joke: &quot;Knock knock&quot;&#125;);</span><br><span class="line">port.onMessage.addListener(function(msg) &#123;</span><br><span class="line">  if (msg.question === &quot;Who&#x27;s there?&quot;)</span><br><span class="line">    port.postMessage(&#123;answer: &quot;Madame&quot;&#125;);</span><br><span class="line">  else if (msg.question === &quot;Madame who?&quot;)</span><br><span class="line">    port.postMessage(&#123;answer: &quot;Madame... Bovary&quot;&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">//监听长连接</span><br><span class="line">chrome.runtime.onConnect.addListener(function(port) &#123;</span><br><span class="line">  console.assert(port.name === &quot;knockknock&quot;);</span><br><span class="line">  port.onMessage.addListener(function(msg) &#123;</span><br><span class="line">    if (msg.joke === &quot;Knock knock&quot;)</span><br><span class="line">      port.postMessage(&#123;question: &quot;Who&#x27;s there?&quot;&#125;);</span><br><span class="line">    else if (msg.answer === &quot;Madame&quot;)</span><br><span class="line">      port.postMessage(&#123;question: &quot;Madame who?&quot;&#125;);</span><br><span class="line">    else if (msg.answer === &quot;Madame... Bovary&quot;)</span><br><span class="line">      port.postMessage(&#123;question: &quot;I don&#x27;t get it.&quot;&#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>port被设计为浏览器扩展的不同部分之间的双向通信方法。发起一个长连接（runtime.connect 或者 tabs.connect或者runtime.connectNative）时，就会生成一个port</p>
+<p>插件之间通信<br>chrome.runtime.onMessageExternal，需要知道插件的id<br>chrome.runtime.onConnectExternal<br>页面之间通信<br>和本地应用之间通信</p>
+<p>存储<br>chrome.storage.sync<br>chrome.storage.local<br>&#x2F;&#x2F; 监听变化<br>chrome.storage.onChanged.addListener(function (changes, namespace) {<br>  for (let [key, { oldValue, newValue }] of Object.entries(changes)) {<br>    console.log(<br>      <code>Storage key &quot;$&#123;key&#125;&quot; in namespace &quot;$&#123;namespace&#125;&quot; changed.</code>,<br>      <code>Old value was &quot;$&#123;oldValue&#125;&quot;, new value is &quot;$&#123;newValue&#125;&quot;.</code><br>    );<br>  }<br>});</p>
+<p>&#x2F;&#x2F; 获取<br>chrome.storage.sync.get(‘options’, (data) &#x3D;&gt; {<br>  Object.assign(options, data.options);<br>  optionsForm.debug.checked &#x3D; Boolean(options.debug);;<br>});</p>
+<p>&#x2F;&#x2F; 设置<br>chrome.storage.sync.set({options});</p>
+<p>调试<br>1、background.html<br>2、popup.html(保持popup不关闭)<br>3.1、css<br><img src="http://www.tomo.im/pic-blog/extension/extension-18.png"></p>
+<p>3.2 js<br><img src="http://www.tomo.im/pic-blog/extension/extension-19.png"><br>￼<br>常见API总结<br>比较常用用的一些API系列：</p>
+<ul>
+<li>chrome.tabs</li>
+<li>chrome.runtime</li>
+<li>chrome.webRequest</li>
+<li>chrome.window</li>
+<li>chrome.storage</li>
+<li>chrome.contextMenus</li>
+<li>chrome.devtools</li>
+<li>chrome.extension</li>
+</ul>
+<h2 id="打包和发布"><a href="#打包和发布" class="headerlink" title="打包和发布"></a>打包和发布</h2><p><img src="http://www.tomo.im/pic-blog/extension/extension-20.png"></p>
+<p>生成.crx文件<br>谷歌账号+谷歌开发者（5$）上传到应用商店。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Tomo 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/05/2022-01-05-sourcetree-reconfig/" rel="prev" title="SourceTree修改git账号">
+      <i class="fa fa-chevron-left"></i> SourceTree修改git账号
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/15/2022-03-15-tinypng-trial/" rel="next" title="智能图片压缩工具Tinypng">
+      智能图片压缩工具Tinypng <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%EF%BC%88%E6%89%A9%E5%B1%95%EF%BC%89%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是浏览器插件（扩展）？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">为什么学习浏览器插件开发？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91%E8%B0%83%E8%AF%95%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">怎么进行开发调试？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E4%B8%AA%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="nav-number">3.1.</span> <span class="nav-text">5个核心概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chrome%E6%8F%92%E4%BB%B6%E7%9A%848%E7%A7%8D%E5%B1%95%E7%A4%BA%E5%BD%A2%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">Chrome插件的8种展示形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E5%92%8C%E5%8F%91%E5%B8%83"><span class="nav-number">5.</span> <span class="nav-text">打包和发布</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Tomo</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tomo</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

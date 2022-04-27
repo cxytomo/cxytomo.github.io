@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.tomo.im","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="HTTP协议上的gzip编码是一种用来改进web应用程序性能的技术，web服务器和客户端（浏览器）必须共同支持gzip。目前(2022-04)所有浏览器都支持该协议。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack优化-启用gzip">
+<meta property="og:url" content="http://www.tomo.im/2022/03/30/2022-03-30-webpack%E4%BC%98%E5%8C%96-%E5%90%AF%E7%94%A8gzip/index.html">
+<meta property="og:site_name" content="Tomo&#39;s Blog">
+<meta property="og:description" content="HTTP协议上的gzip编码是一种用来改进web应用程序性能的技术，web服务器和客户端（浏览器）必须共同支持gzip。目前(2022-04)所有浏览器都支持该协议。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/gzip-1.png">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/gzip-2.png">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/gzip-3.png">
+<meta property="og:image" content="http://www.tomo.im/pic-blog/gzip-4.png">
+<meta property="article:published_time" content="2022-03-30T05:16:00.000Z">
+<meta property="article:modified_time" content="2022-04-21T06:09:51.035Z">
+<meta property="article:author" content="Tomo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.tomo.im/pic-blog/gzip-1.png">
+
+<link rel="canonical" href="http://www.tomo.im/2022/03/30/2022-03-30-webpack%E4%BC%98%E5%8C%96-%E5%90%AF%E7%94%A8gzip/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>webpack优化-启用gzip | Tomo's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H4MK7VVY8K"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-H4MK7VVY8K');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Tomo's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">social phobic</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.tomo.im/2022/03/30/2022-03-30-webpack%E4%BC%98%E5%8C%96-%E5%90%AF%E7%94%A8gzip/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tomo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tomo's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          webpack优化-启用gzip
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-30 13:16:00" itemprop="dateCreated datePublished" datetime="2022-03-30T13:16:00+08:00">2022-03-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Webpack/" itemprop="url" rel="index"><span itemprop="name">Webpack</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">HTTP协议上的gzip编码是一种用来改进web应用程序性能的技术，web服务器和客户端（浏览器）必须共同支持gzip。目前(2022-04)所有浏览器都支持该协议。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="一、GZIP简介"><a href="#一、GZIP简介" class="headerlink" title="一、GZIP简介"></a>一、GZIP简介</h3><p>HTTP协议上的gzip编码是一种用来改进web应用程序性能的技术，web服务器和客户端（浏览器）必须共同支持gzip。<a target="_blank" rel="noopener" href="https://caniuse.com/?search=gzip" title="目前(2022-04)所有浏览器都支持该协议">目前(2022-04)所有浏览器都支持该协议</a>。<br><img src="http://www.tomo.im/pic-blog/gzip-1.png"></p>
+<p>GZIP是若干文件压缩程序的简称，通常指GNU计划的实现，此处的GZIP代表的就是GUN ZIP，这也是HTTP1.1协议定义的两种压缩方法中最常用的一种压缩方法，客户端浏览器大都支持这种压缩格式。亲测压缩后的文件大小可以减至原先的1&#x2F;3甚至更小。<br>其原理如下图<br><a href="http://www.tomo.im/pic-blog/gzip-2.png"><img src="http://www.tomo.im/pic-blog/gzip-2.png"></a><br>客户端向服务器端发起一个请求，请求头会带上accept-encoding表示客户端支持的压缩编码格式。<br><code>accept-encoding: gzip, deflate, br</code></p>
+<p>当<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_34176694/article/details/88028406" title="服务端启用gzip">服务端启用gzip</a>时，</p>
+<ul>
+<li>接收客户端请求，查看请求头accept-encoding支持的压缩编码格式，如果是包含gzip那么</li>
+<li>在每次响应资源请求之前进行gzip编码压缩后再响应返回(在响应头会带上content-encoding: gzip)<br><img src="http://www.tomo.im/pic-blog/gzip-3.png"></li>
+</ul>
+<p>既然压缩了，就涉及到解压。客户端接受到响应的内容后，根据content-encoding格式自动进行相应的解码。</p>
+<h3 id="二、webpack优化"><a href="#二、webpack优化" class="headerlink" title="二、webpack优化"></a>二、webpack优化</h3><h4 id="压缩成gz文件"><a href="#压缩成gz文件" class="headerlink" title="压缩成gz文件"></a>压缩成gz文件</h4><p>可以借助<code>compression-webpack-plugin</code>对前端资源进行gzip压缩，压缩完会生成以<code>.gz</code>结尾的同名文件。<br><img src="http://www.tomo.im/pic-blog/gzip-4.png"></p>
+<h4 id="服务器直接读取gz文件"><a href="#服务器直接读取gz文件" class="headerlink" title="服务器直接读取gz文件"></a>服务器直接读取gz文件</h4><p>服务器在查找到有与源文件同名的.gz文件就会直接读取，不会主动压缩，降低cpu负载，优化了服务器性能</p>
+<h4 id="问题来了，为什么会自动去取gz文件？自动是有前提的"><a href="#问题来了，为什么会自动去取gz文件？自动是有前提的" class="headerlink" title="问题来了，为什么会自动去取gz文件？自动是有前提的"></a>问题来了，为什么会自动去取gz文件？自动是有前提的</h4><p>以nginx为例<br>动态压缩模式</p>
+<blockquote>
+<p>nginx在设置了gzip on 后就已经打开了gzip压缩功能，不过这时候nginx所使用的是动态压缩。在动态压缩的情况下nginx会自动的将文件压缩成.gz文件，这时候就算不配置webpack也能达到一样的效果。<br>但是动态对所有文件进行压缩无疑会占用服务器的资源来进行此操作，可以通过限制文件类型<code>gzip_types</code>来减少对服务器资源的占用。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">gzip on;</span><br><span class="line">gzip_min_length <span class="number">1100</span>;</span><br><span class="line">gzip_buffers <span class="number">4</span> 8k;</span><br><span class="line">gzip_comp_level <span class="number">6</span>;</span><br><span class="line">gzip_proxied any;</span><br><span class="line">gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss</span><br></pre></td></tr></table></figure>
+
+<p>静态压缩模式</p>
+<blockquote>
+<p>相对的nginx提供了静态压缩模式，也就是gzip_static，在这个模式下nginx会去寻找对应文件的.gz文件相对的nginx提供了静态压缩模式，也就是gzip_static，在这个模式下nginx会去寻找对应文件的.gz文件，只有.gz文件不存在的时候才会去压缩对应文件。这样就不会过度占用服务器资源。</p>
+</blockquote>
+<blockquote>
+<p>一般不会默认安装此模块。gzip_static功能依赖http_gzip_static_module 模块。</p>
+</blockquote>
+<h4 id="配置过程中遇到的问题"><a href="#配置过程中遇到的问题" class="headerlink" title="配置过程中遇到的问题"></a>配置过程中遇到的问题</h4><p>1、webpack版本冲突</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">TypeError</span>:<span class="title class_">Cannot</span> read property <span class="string">&#x27;thisCompilation&#x27;</span> <span class="keyword">of</span> <span class="literal">undefined</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;webpack&quot;</span><span class="punctuation">:</span> <span class="string">&quot;4.16.5&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;compression-webpack-plugin&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^6.1.1&quot;</span></span><br></pre></td></tr></table></figure>
+<p>2、插件新旧版本配置项变化了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- options has an unknown property &#x27;asset&#x27;. These properties are valid:</span><br><span class="line">object &#123; test?, include?, exclude?, algorithm?, compressionOptions?, threshold?, minRatio?, deleteOriginalAssets?, filename? &#125;</span><br></pre></td></tr></table></figure>
+<p>看错误提示说不存在<code>asset</code>属性，查看<a target="_blank" rel="noopener" href="https://github.com/webpack-contrib/compression-webpack-plugin">github</a>上的文档发现，应该改为<code>filename</code>。</p>
+<h4 id="具体webpack配置"><a href="#具体webpack配置" class="headerlink" title="具体webpack配置"></a>具体webpack配置</h4><p>webpack配置中，<code>productionGzip</code>默认为<code>false</code>，将它设置为<code>true</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (config.<span class="property">build</span>.<span class="property">productionGzip</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="title class_">CompressionWebpackPlugin</span> = <span class="built_in">require</span>(<span class="string">&#x27;compression-webpack-plugin&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  webpackConfig.<span class="property">plugins</span>.<span class="title function_">push</span>(</span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">CompressionWebpackPlugin</span>(&#123;</span><br><span class="line">      <span class="attr">filename</span>: <span class="string">&#x27;[path][base].gz&#x27;</span>,</span><br><span class="line">      <span class="attr">algorithm</span>: <span class="string">&#x27;gzip&#x27;</span>,</span><br><span class="line">      <span class="attr">test</span>: <span class="keyword">new</span> <span class="title class_">RegExp</span>(</span><br><span class="line">        <span class="string">&#x27;\\.(&#x27;</span> +</span><br><span class="line">        config.<span class="property">build</span>.<span class="property">productionGzipExtensions</span>.<span class="title function_">join</span>(<span class="string">&#x27;|&#x27;</span>) +</span><br><span class="line">        <span class="string">&#x27;)$&#x27;</span></span><br><span class="line">      ),</span><br><span class="line">      <span class="attr">threshold</span>: <span class="number">10240</span>,</span><br><span class="line">      <span class="attr">minRatio</span>: <span class="number">0.8</span> <span class="comment">// minRatio小于1才会进行压缩</span></span><br><span class="line">    &#125;)</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Ref："><a href="#Ref：" class="headerlink" title="Ref："></a>Ref：</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_34176694/article/details/88028406" title="服务端启用gzip">服务器端如何开启gzip</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding#compressing_with_gzip" title="gzip浏览器兼容性">gzip浏览器兼容性</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/webpack-contrib/compression-webpack-plugin">插件compression-webpack-plugin的github链接</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Tomo 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/15/2022-03-15-tinypng-trial/" rel="prev" title="智能图片压缩工具Tinypng">
+      <i class="fa fa-chevron-left"></i> 智能图片压缩工具Tinypng
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/20/2022-04-20-%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8C%87%E7%BA%B9-%E6%B5%8B%E8%AF%95/" rel="next" title="浏览器指纹-测试">
+      浏览器指纹-测试 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81GZIP%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">一、GZIP简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81webpack%E4%BC%98%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">二、webpack优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E6%88%90gz%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">压缩成gz文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B4%E6%8E%A5%E8%AF%BB%E5%8F%96gz%E6%96%87%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text">服务器直接读取gz文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%9D%A5%E4%BA%86%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E8%87%AA%E5%8A%A8%E5%8E%BB%E5%8F%96gz%E6%96%87%E4%BB%B6%EF%BC%9F%E8%87%AA%E5%8A%A8%E6%98%AF%E6%9C%89%E5%89%8D%E6%8F%90%E7%9A%84"><span class="nav-number">2.3.</span> <span class="nav-text">问题来了，为什么会自动去取gz文件？自动是有前提的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.4.</span> <span class="nav-text">配置过程中遇到的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B7%E4%BD%93webpack%E9%85%8D%E7%BD%AE"><span class="nav-number">2.5.</span> <span class="nav-text">具体webpack配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ref%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">Ref：</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Tomo</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tomo</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

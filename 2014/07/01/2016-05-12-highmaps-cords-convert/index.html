@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.tomo.im","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="最近做后台报表展示系统，用到Highcharts。经纬度转换为svg图上坐标时遇到问题，记录一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Highmaps 经纬度转换为svg图上坐标">
+<meta property="og:url" content="http://www.tomo.im/2014/07/01/2016-05-12-highmaps-cords-convert/index.html">
+<meta property="og:site_name" content="Tomo&#39;s Blog">
+<meta property="og:description" content="最近做后台报表展示系统，用到Highcharts。经纬度转换为svg图上坐标时遇到问题，记录一下。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://user-image.logdown.io/user/3109/blog/3134/post/732251/nFWcC7f4TFe4HEYRIurb_8740.png">
+<meta property="og:image" content="http://user-image.logdown.io/user/3109/blog/3134/post/732251/dq3IuKufQGe4NXmRSOzG_addpoint.jpg">
+<meta property="article:published_time" content="2014-07-01T03:21:29.000Z">
+<meta property="article:modified_time" content="2022-04-21T05:11:53.631Z">
+<meta property="article:author" content="Tomo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://user-image.logdown.io/user/3109/blog/3134/post/732251/nFWcC7f4TFe4HEYRIurb_8740.png">
+
+<link rel="canonical" href="http://www.tomo.im/2014/07/01/2016-05-12-highmaps-cords-convert/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Highmaps 经纬度转换为svg图上坐标 | Tomo's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H4MK7VVY8K"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-H4MK7VVY8K');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Tomo's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">social phobic</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.tomo.im/2014/07/01/2016-05-12-highmaps-cords-convert/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tomo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tomo's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Highmaps 经纬度转换为svg图上坐标
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2014-07-01 11:21:29" itemprop="dateCreated datePublished" datetime="2014-07-01T11:21:29+08:00">2014-07-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Javascript-Highmaps-Highcharts/" itemprop="url" rel="index"><span itemprop="name">Javascript Highmaps Highcharts</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">最近做后台报表展示系统，用到Highcharts。经纬度转换为svg图上坐标时遇到问题，记录一下。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>最近做后台报表展示系统，用到<a target="_blank" rel="noopener" href="http://www.highcharts.com/">Highcharts</a>。<code>Highcharts</code>兼容所有现代浏览器及低版本的IE浏览器（<code>IE6+</code>），可配置性高，包括颜色、线条，点，点的形状、背景图等等。</p>
+<p>地域上展示需要<a target="_blank" rel="noopener" href="http://www.highcharts.com/maps/demo">Highmaps</a>。遇到一个需求，需要根据某个城市的经纬度，在地图上实时显示这个点。这就需要将经纬度通过一定的转换，转化为图上的坐标点。实际上这是一件很简单的事情，生成地图的时候肯定是根据某种计算规则转换出来的，所以只要根据这个规则来转换就可以了。</p>
+<p>但是现实往往没有想象的那么简单。</p>
+<p><img src="http://user-image.logdown.io/user/3109/blog/3134/post/732251/nFWcC7f4TFe4HEYRIurb_8740.png" alt="8740.png"><br><code>Highcharts Error #22</code>是说地图不支持经纬度转换成图上坐标，但是我的地图数据确实是从官方下来的，且是1.1.0版本以上的。<br>后来找了好多地方，终于在<a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/29036951/displaying-points-and-drilldown-data-in-highmaps">stackoverflow</a>上找到了答案。</p>
+<p>首先，要进行经纬度转换需要用到<a target="_blank" rel="noopener" href="http://proj4js.org/">Proj4js</a>，<code>Proj4js</code>通过某种规则将一个坐标系上的点向另一个坐标系做投影，在这里就是将实际的地理位置投影成平面上的点。所以需要引入<code>Proj4js</code>，注意，引入的位置在<code>highcharts</code>之前。</p>
+<p>其次，既然是从官方下的数据，为什么它识别不了是自己的数据呢？原因在于对原始地理数据的处理上不妥。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var data = Highcharts.geojson(Highcharts.maps[&#x27;countries/cn/custom/cn-all-china&#x27;]);</span><br><span class="line"></span><br><span class="line">$.each(data, function (i) &#123;</span><br><span class="line">    this.drilldown = this.properties[&#x27;drill-key&#x27;];</span><br><span class="line">    this.value = i; </span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">$(&#x27;#container&#x27;).highcharts(&#x27;Map&#x27;, &#123;</span><br><span class="line">    // ...</span><br><span class="line">    series : [&#123;</span><br><span class="line">        data : data,</span><br><span class="line">        name: &#x27;中国&#x27;</span><br><span class="line">    &#125;]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>这样会导致<code>highmap</code>无法识别这是从它库里荡下来的数据。因此，不允许你使用经纬度转换。解决这个问题需要保留原始数据不变，另外备一份数据，调用<code>highmap</code>自身的方法<code>joinBy</code>，让它自己去拼合数据。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">var mapData = Highcharts.maps[&#x27;countries/cn/custom/cn-all-china&#x27;],</span><br><span class="line">    myData = Highcharts.geojson(Highcharts.maps[&#x27;countries/cn/custom/cn-all-china&#x27;]);</span><br><span class="line"></span><br><span class="line">$.each(myData, function (i) &#123;</span><br><span class="line">    this[&#x27;hc-key&#x27;] = this.properties[&#x27;hc-key&#x27;];</span><br><span class="line">    this.drilldown = this.properties[&#x27;drill-key&#x27;];</span><br><span class="line">    this.value = i;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">$(&#x27;#container&#x27;).highcharts(&#x27;Map&#x27;, &#123;</span><br><span class="line">    // ...</span><br><span class="line">    series : [&#123;</span><br><span class="line">        data : myData,</span><br><span class="line">        mapData : mapData,</span><br><span class="line">        joinBy: &#x27;hc-key&#x27;,</span><br><span class="line">        name: &#x27;中国&#x27;</span><br><span class="line">    &#125;]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>看着万事俱备，其实前面还有坑。为了方便调试，引入的Proj4js、map都是src.js未压缩的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Highcharts.maps[&quot;countries/cn/custom/cn-all-china&quot;]=&#123;</span><br><span class="line">&quot;title&quot;:&quot;China with Hong Kong, Macau, and Taiwan&quot;,&quot;version&quot;:&quot;1.1.1&quot;,&quot;type&quot;:&quot;FeatureCollection&quot;,&quot;copyright&quot;:&quot;Copyright (c) 2014 Highsoft AS, Based on data from Natural Earth&quot;,&quot;copyrightShort&quot;:&quot;Natural Earth&quot;,&quot;copyrightUrl&quot;:&quot;http://www.naturalearthdata.com&quot;,</span><br><span class="line">&quot;crs&quot;:&#123;</span><br><span class="line">	&quot;type&quot;:&quot;name&quot;,</span><br><span class="line">  &quot;properties&quot;:&#123;&quot;name&quot;:&quot;urn:ogc:def:crs:EPSG:3415&quot;&#125;&#125;,</span><br><span class="line">  &quot;hc-transform&quot;:&#123;</span><br><span class="line">  	&quot;hc-transform&quot;:&#123;&quot;default&quot;:&#123;&quot;crs&quot;:&quot;+proj=lcc +lat_1=18 +lat_2=24 +lat_0=21 +lon_0=114 +x_0=500000 +y_0=500000 +ellps=WGS72 +towgs84=0,0,1.9,0,0,0.814,-0.38 +units=m +no_defs&quot;,&quot;scale&quot;:0.000129831107685,&quot;jsonres&quot;:15.5,&quot;jsonmarginX&quot;:-999,&quot;jsonmarginY&quot;:9851.0,&quot;xoffset&quot;:-3139937.49309,&quot;yoffset&quot;:4358972.7486&#125;</span><br><span class="line">&#125;,...&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p><code>“lcc”,”18”,”24”,”21”,…”WGS72”</code>这几个参数的后面都有空格，而<code>proj4js</code>都没有做<code>trim</code>处理，导致报错。<br>可以将空格去掉或者<code>proj4s</code>添加<code>trim</code>操作。<br>最后就圆满完成任务了。<br>下图是效果图。<br><img src="http://user-image.logdown.io/user/3109/blog/3134/post/732251/dq3IuKufQGe4NXmRSOzG_addpoint.jpg" alt="addpoint.jpg"></p>
+<p>参考链接：<br><a target="_blank" rel="noopener" href="http://code.highcharts.com/mapdata/">HIGHMAPS - MAP COLLECTION</a><br><a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/3604663/highcharts-animations-other-than-the-default">STACKOVERFLOW</a></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Tomo 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2013/07/15/2013-07-15-css-transfrom-3D/" rel="prev" title="CSS Transfrom 3D">
+      <i class="fa fa-chevron-left"></i> CSS Transfrom 3D
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2014/07/01/2014-07-01-self-introduction/" rel="next" title="How to introduce yourself in English">
+      How to introduce yourself in English <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Tomo</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tomo</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
