@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://www.tomo.im/pic-blog/gzip-3.png">
 <meta property="og:image" content="http://www.tomo.im/pic-blog/gzip-4.png">
 <meta property="article:published_time" content="2022-03-30T05:16:00.000Z">
-<meta property="article:modified_time" content="2022-04-21T06:09:51.035Z">
+<meta property="article:modified_time" content="2022-04-29T05:43:35.424Z">
 <meta property="article:author" content="Tomo">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://www.tomo.im/pic-blog/gzip-1.png">
@@ -52,14 +52,21 @@
 
   <title>webpack优化-启用gzip | Tomo's Blog</title>
   
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H4MK7VVY8K"></script>
     <script>
-      if (CONFIG.hostname === location.hostname) {
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-H4MK7VVY8K');
+      function sendPageView() {
+        if (CONFIG.hostname !== location.hostname) return;
+        var uid = localStorage.getItem('uid') || (Math.random() + '.' + Math.random());
+        localStorage.setItem('uid', uid);
+        navigator.sendBeacon('https://www.google-analytics.com/collect', new URLSearchParams({
+          v  : 1,
+          tid: 'G-H4MK7VVY8K',
+          cid: uid,
+          t  : 'pageview',
+          dp : encodeURIComponent(location.pathname)
+        }));
       }
+      document.addEventListener('pjax:complete', sendPageView);
+      sendPageView();
     </script>
 
 
@@ -230,7 +237,7 @@
 
 <p>静态压缩模式</p>
 <blockquote>
-<p>相对的nginx提供了静态压缩模式，也就是gzip_static，在这个模式下nginx会去寻找对应文件的.gz文件相对的nginx提供了静态压缩模式，也就是gzip_static，在这个模式下nginx会去寻找对应文件的.gz文件，只有.gz文件不存在的时候才会去压缩对应文件。这样就不会过度占用服务器资源。</p>
+<p>相对的nginx提供了静态压缩模式，也就是gzip_static，在这个模式下nginx会去寻找对应文件的.gz文件，只有.gz文件不存在的时候才会去压缩对应文件。这样就不会过度占用服务器资源。</p>
 </blockquote>
 <blockquote>
 <p>一般不会默认安装此模块。gzip_static功能依赖http_gzip_static_module 模块。</p>
