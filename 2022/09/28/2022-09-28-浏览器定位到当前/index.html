@@ -118,9 +118,7 @@
 						})
 					})
 				} else {
-                    alert(status)
-                    alert(JSON.stringify(result))
-                    alert('in getLngLatLocation error')
+                    alert('in geolocation getCurrentPosition')
                     geolocation.getCurrentPosition((status, result) => {
                         alert('in geolocation getCurrentPosition')
                         alert(status)
