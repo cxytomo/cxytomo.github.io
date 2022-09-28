@@ -81,7 +81,7 @@
             // map.setCenter([lng, lat])
         });
     }
-    function getLngLatLocation(data) {
+    function getLngLatLocation() {
             alert('in getLngLatLocation')
 			const citySearch = new AMap.CitySearch();
 			citySearch.getLocalCity((status, result) => {
@@ -116,8 +116,8 @@
                 }
 			})
 		}
-    function onError(data) {
-			getLngLatLocation(data);
+    function onError() {
+			getLngLatLocation();
 	}
     AMapLoader.load({
         "key": "4d56dc84e45cd3d4aceca1a92f22f2dd",              // 申请好的Web端开发者Key，首次调用 load 时必填
@@ -198,7 +198,7 @@
             //         console.log(point)
             //     } else {
                     alert('get city info error')
-                    onError(result)
+                    onError()
             //     }
             // })
         }).catch((e)=>{
