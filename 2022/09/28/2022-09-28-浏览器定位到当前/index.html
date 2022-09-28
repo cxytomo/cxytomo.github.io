@@ -82,9 +82,10 @@
         });
     }
     function getLngLatLocation(data) {
+            alert('in getLngLatLocation')
 			const citySearch = new AMap.CitySearch();
 			citySearch.getLocalCity((status, result) => {
-				if (status === 'complete' && result.info === 'OK') {
+				if (status === 'complete') {
 					// 查询成功，result即为当前所在城市信息
 					alert('通过ip获取当前城市：', result)
 					cityName = result.city;
@@ -101,14 +102,18 @@
 						})
 						var lnglat = result.rectangle.split(';')[0].split(',');
 						geocoder.getAddress(lnglat, (status, data) => {
-							if (status === 'complete' && data.info === 'OK') {
+                            alert(data.info)
+							if (status === 'complete') {
 								// result为对应的地理位置详细信息
-								// console.log(data)
-							}
+								alert('getLngLatLocation 逆向地理编码查询地理位置详细信息')
+							} else {
+								alert('getLngLatLocation 逆向地理编码查询地理位置详细信息 error')
+                            }
 						})
 					})
 				} else {
-				}
+                    alert('in getLngLatLocation error')
+                }
 			})
 		}
     function onError(data) {
@@ -179,23 +184,23 @@
                 zoomToAccuracy: true
             })
 			map.addControl(geolocation);
-            geolocation.getCityInfo((status, result) => {
-                if (status == 'complete') {
-                    curCityName = result.city;
-                    curCityCode = result.adcode;
-                    point = {
-                        lng: result.position[0],
-                        lat: result.position[1]
-                    };
-                    console.log(curCityName)
-                    console.log(curCityCode)
-                    alert(curCityName)
-                    console.log(point)
-                } else {
+            // geolocation.getCityInfo((status, result) => {
+            //     if (status == 'complete') {
+            //         curCityName = result.city;
+            //         curCityCode = result.adcode;
+            //         point = {
+            //             lng: result.position[0],
+            //             lat: result.position[1]
+            //         };
+            //         console.log(curCityName)
+            //         console.log(curCityCode)
+            //         alert(curCityName)
+            //         console.log(point)
+            //     } else {
                     alert('get city info error')
                     onError(result)
-                }
-            })
+            //     }
+            // })
         }).catch((e)=>{
             console.error(e);  //加载错误提示
         });
