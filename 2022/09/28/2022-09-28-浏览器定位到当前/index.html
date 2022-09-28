@@ -26,24 +26,27 @@
             "version": '2.0'  // Loca 版本
         },
     }).then((AMap)=>{
+            await new Promise((resolve, reject) => {
+				if (window.AMapUI) {
+					resolve(window.AMapUI)
+				} else {
+					const scriptUI = document.createElement('script')
+					scriptUI.type = 'text/javascript'
+					scriptUI.src = '//webapi.amap.com/ui/1.1/main.js?v=1.1.1'
+					scriptUI.onerror = reject
+
+					scriptUI.onload = function (su) {
+						resolve(window.AMapUI)
+					};
+					document.body.appendChild(scriptUI)
+				}
+			})
             var map = new AMap.Map('container');
             map.addControl(new AMap.Scale());
         }).catch((e)=>{
             console.error(e);  //加载错误提示
         });   
     </script>
-    <script src="//webapi.amap.com/ui/1.1/main.js"></script>
-    <script type="text/javascript" charset="utf-8" async="" data-requirecontext="amap-ui-1.1.2"
-        data-requiremodule="ui/misc/PositionPicker"
-        src="//webapi.amap.com/ui/1.1/ui/misc/PositionPicker.js?v=1.1.2&amp;mt=ui&amp;key="></script>
-    <script type="text/javascript" charset="utf-8" async="" data-requirecontext="amap-ui-1.1.2"
-        data-requiremodule="ui/misc/MobiCityPicker"
-        src="//webapi.amap.com/ui/1.1/ui/misc/MobiCityPicker.js?v=1.1.2&amp;mt=ui&amp;key="></script>
-    <script type="text/javascript" charset="utf-8" async="" data-requirecontext="amap-ui-1.1.2"
-        data-requiremodule="ui/overlay/SimpleInfoWindow"
-        src="//webapi.amap.com/ui/1.1/ui/overlay/SimpleInfoWindow.js?v=1.1.2&amp;mt=ui&amp;key="></script>
-    <script type="text/javascript" charset="utf-8" async="" data-requirecontext="amap-ui-1.1.2"
-        data-requiremodule="//webapi.amap.com/count?type=UIInit&amp;k="
-        src="//webapi.amap.com/count?type=UIInit&amp;k=&amp;v=1.1.2"></script>
+    <!-- <script src="//webapi.amap.com/ui/1.1/main.js"></script> -->
 </body>
 </html>
