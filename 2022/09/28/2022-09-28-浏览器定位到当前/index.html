@@ -18,6 +18,8 @@
     var point = {
 
     }
+    var longitude = ''
+    var latitude = ''
 
     function handlePositionPicker(map, PositionPicker, SimpleInfoWindow) {
 			const positionPicker = new PositionPicker({
@@ -79,6 +81,39 @@
             // map.setCenter([lng, lat])
         });
     }
+    function getLngLatLocation(data) {
+			const citySearch = new AMap.CitySearch();
+			citySearch.getLocalCity((status, result) => {
+				if (status === 'complete' && result.info === 'OK') {
+					// 查询成功，result即为当前所在城市信息
+					console.log('通过ip获取当前城市：', result)
+					cityName = result.city;
+					cityCode = result.adcode;
+					var lnglat = result.rectangle.split(';')[0].split(',');
+					longitude = lnglat[0];
+					latitude = lnglat[1];
+
+					// 逆向地理编码查询地理位置详细信息
+					AMap.plugin('AMap.Geocoder', () => {
+						var geocoder = new AMap.Geocoder({
+							// city 指定进行编码查询的城市，支持传入城市名、adcode 和 citycode
+							city: result.adcode
+						})
+						var lnglat = result.rectangle.split(';')[0].split(',');
+						geocoder.getAddress(lnglat, (status, data) => {
+							if (status === 'complete' && data.info === 'OK') {
+								// result为对应的地理位置详细信息
+								// console.log(data)
+							}
+						})
+					})
+				} else {
+				}
+			})
+		}
+    function onError(data) {
+			getLngLatLocation(data);
+	}
     AMapLoader.load({
         "key": "4d56dc84e45cd3d4aceca1a92f22f2dd",              // 申请好的Web端开发者Key，首次调用 load 时必填
         "version": "2.0",   // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
@@ -144,6 +179,22 @@
                 zoomToAccuracy: true
             })
 			map.addControl(geolocation);
+            geolocation.getCityInfo((status, result) => {
+                if (status == 'complete') {
+                    curCityName = result.city;
+                    curCityCode = result.adcode;
+                    point = {
+                        lng: result.position[0],
+                        lat: result.position[1]
+                    };
+                    console.log(curCityName)
+                    console.log(curCityCode)
+                    console.log(point)
+                } else {
+                    console.log('get city info error')
+                    onError(result)
+                }
+            })
         }).catch((e)=>{
             console.error(e);  //加载错误提示
         });
