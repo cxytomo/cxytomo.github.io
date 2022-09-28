@@ -222,11 +222,16 @@
             // })
             geolocation.getCurrentPosition((status, result) => {
                 alert('in geolocation getCurrentPosition')
+                alert(status)
+                alert('status')
+                console.log(status)
+                alert(JSON.stringify(result))
+                console.log(result)
                 if (status == 'complete') {
                     longitude = result.position.lng;
                     latitude = result.position.lat;
                 } else {
-                    onError()
+                    // onError()
                 }
             });
         }).catch((e)=>{
