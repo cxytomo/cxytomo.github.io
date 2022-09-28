@@ -86,7 +86,7 @@
 			citySearch.getLocalCity((status, result) => {
 				if (status === 'complete' && result.info === 'OK') {
 					// 查询成功，result即为当前所在城市信息
-					console.log('通过ip获取当前城市：', result)
+					alert('通过ip获取当前城市：', result)
 					cityName = result.city;
 					cityCode = result.adcode;
 					var lnglat = result.rectangle.split(';')[0].split(',');
