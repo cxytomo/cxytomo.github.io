@@ -123,6 +123,10 @@
                     alert('in getLngLatLocation error')
                     geolocation.getCurrentPosition((status, result) => {
                         alert('in geolocation getCurrentPosition')
+                        alert(status)
+                        console.log(status)
+                        console.log(result)
+                        alert(JSON.stringify(result))
                         if (status == 'complete') {
                             longitude = result.position.lng;
                             latitude = result.position.lat;
