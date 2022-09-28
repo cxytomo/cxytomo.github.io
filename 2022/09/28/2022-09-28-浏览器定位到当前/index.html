@@ -109,7 +109,10 @@
                                 console.log(data)
 								console.log('getLngLatLocation 逆向地理编码查询地理位置详细信息')
 								alert('getLngLatLocation 逆向地理编码查询地理位置详细信息')
-							} else {
+                                const { regeocode } = data
+                                const { formattedAddress, addressComponent } = regeocode
+                                alert(formattedAddress)
+                            } else {
 								alert('getLngLatLocation 逆向地理编码查询地理位置详细信息 error')
                             }
 						})
