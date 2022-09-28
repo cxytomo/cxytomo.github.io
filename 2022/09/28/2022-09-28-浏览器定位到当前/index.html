@@ -9,7 +9,7 @@
 <body>
     <div id="container" style="width:100%;height: 50vh;"></div>
     <script src="//webapi.amap.com/loader.js"></script>
-    <script type="text/javascript" >
+    <script type="text/javascript">
     AMapLoader.load({
         "key": "4d56dc84e45cd3d4aceca1a92f22f2dd",              // 申请好的Web端开发者Key，首次调用 load 时必填
         "version": "2.0",   // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
@@ -25,7 +25,7 @@
         "Loca":{                // 是否加载 Loca， 缺省不加载
             "version": '2.0'  // Loca 版本
         },
-    }).then((AMap)=>{
+    }).then(async (AMap)=>{
             await new Promise((resolve, reject) => {
 				if (window.AMapUI) {
 					resolve(window.AMapUI)
