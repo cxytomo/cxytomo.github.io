@@ -214,10 +214,19 @@
             //         alert(curCityName)
             //         console.log(point)
             //     } else {
-                    alert('get city info error')
-                    onError()
+            //         alert('get city info error')
+            //         onError()
             //     }
             // })
+            geolocation.getCurrentPosition((status, result) => {
+                alert('in geolocation getCurrentPosition')
+                if (status == 'complete') {
+                    longitude = result.position.lng;
+                    latitude = result.position.lat;
+                } else {
+                    onError()
+                }
+            });
         }).catch((e)=>{
             console.error(e);  //加载错误提示
         });
