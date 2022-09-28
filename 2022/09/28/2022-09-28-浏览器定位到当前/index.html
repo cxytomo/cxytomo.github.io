@@ -10,6 +10,12 @@
     <div id="container" style="width:100%;height: 50vh;"></div>
     <script src="//webapi.amap.com/loader.js"></script>
     <script type="text/javascript">
+    window.resultList = []
+    window.fullResultList = []
+    window.cityPicker = null
+    window.curCityName = ''
+    window.curCityCode = ''
+
     AMapLoader.load({
         "key": "4d56dc84e45cd3d4aceca1a92f22f2dd",              // 申请好的Web端开发者Key，首次调用 load 时必填
         "version": "2.0",   // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
@@ -45,6 +51,25 @@
 			})
             var map = new AMap.Map('container');
             window.map = map
+            //加载PositionPicker，loadUI的路径参数为模块名中 'ui/' 之后的部分
+            AMapUI.loadUI([
+                'misc/PositionPicker',
+                'misc/MobiCityPicker',
+                'overlay/SimpleInfoWindow'
+                // 'misc/PoiPicker'
+            ], (
+                PositionPicker,
+                MobiCityPicker,
+                SimpleInfoWindow
+                // PoiPicker
+            ) => {
+                this.handlePositionPicker(map, PositionPicker, SimpleInfoWindow)
+                this.handleCityPicker(MobiCityPicker, map)
+                // const poiPicker = new PoiPicker({
+                // 		input: 'tipInput'
+                // });
+                // this.poiPickerReady(poiPicker, map);
+            });
             var geolocation = new AMap.Geolocation({
 				// 是否使用高精度定位，默认：true
                 enableHighAccuracy: true,
@@ -58,7 +83,67 @@
 			map.addControl(geolocation);
         }).catch((e)=>{
             console.error(e);  //加载错误提示
-        });   
+        }); 
+        function handlePositionPicker(map, PositionPicker, SimpleInfoWindow) {
+			const positionPicker = new PositionPicker({
+				mode: 'dragMap',// 设定为拖拽地图模式，可选'dragMap'、'dragMarker'，默认为'dragMap'
+				map: map, // 依赖地图对象
+				iconStyle: { //自定义外观
+					url: '//webapi.amap.com/ui/1.0/assets/position-picker2.png',
+					ancher: [24, 40],
+					size: [40, 40]
+				}
+			});
+			positionPicker.start([this.point.lng, this.point.lat]);
+			// 选址结束后的回调函数
+			positionPicker.on('success', res => {
+				const infoWindow = new SimpleInfoWindow({
+					infoTitle: res.name,
+					infoBody: res.address,
+					offset: new AMap.Pixel(0, -37)
+				});
+				//显示在map上
+				infoWindow.open(map, res.position);
+				if (res.regeocode && res.regeocode.pois) {
+					window.fullResultList = res.regeocode.pois
+					const resultList = [{
+						address: res.nearestJunction,
+						businessArea: '',
+						distance: 0,
+						location: [res.position.lng, res.position.lat],
+						name: res.address
+					}].concat(window.fullResultList)
+					if (resultList.length > 1) {
+						const name0 = resultList[0].name
+						const name1 = resultList[1].name
+						name0.indexOf(name1) > -1 && resultList.splice(0, 1)
+						resultList[0].name = '[当前]' + resultList[0].name
+						window.resultList = resultList
+					}
+				} else {
+					window.fullResultList = []
+				}
+			})
+			positionPicker.on('fail', res => {
+				console.log(res)
+			})
+		}
+		function handleCityPicker(MobiCityPicker, map) {
+			const cityPicker = new MobiCityPicker({
+				//设置主题（同名的className会被添加到外层容器上）
+				theme: "light",
+				//topGroups: ..., // 顶部城市列表
+			});
+			//监听城市选中事件
+			window.cityPicker.on("citySelected", (cityInfo) => {
+				cityPicker.hideImmediately();  //立即隐藏
+				console.log(cityInfo);        //选中的城市信息
+				const { adcode, name, lat, lng } = cityInfo
+				window.curCityName = name
+				window.curCityCode = adcode
+				// map.setCenter([lng, lat])
+			});
+		}
     </script>
     <!-- <script src="//webapi.amap.com/ui/1.1/main.js"></script> -->
 </body>
