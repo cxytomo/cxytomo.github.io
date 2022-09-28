@@ -16,8 +16,7 @@
         "plugins": [
             'AMap.Geolocation',
             'AMap.CitySearch',
-            'AMap.AutoComplete',
-            'AMap.Scale'
+            'AMap.AutoComplete'
         ],           // 需要使用的的插件列表，如比例尺'AMap.Scale'等
         "AMapUI": {             // 是否加载 AMapUI，缺省不加载
             "version": '1.1',   // AMapUI 版本
@@ -45,7 +44,18 @@
 				}
 			})
             var map = new AMap.Map('container');
-            map.addControl(new AMap.Scale());
+            window.map = map
+            var geolocation = new AMap.Geolocation({
+				// 是否使用高精度定位，默认：true
+                enableHighAccuracy: true,
+                // 设置定位超时时间，默认：无穷大
+                timeout: 10000,
+                position: 'RB',
+                showButton: true,
+                panToLocation: true,
+                zoomToAccuracy: true
+            })
+			map.addControl(geolocation);
         }).catch((e)=>{
             console.error(e);  //加载错误提示
         });   
