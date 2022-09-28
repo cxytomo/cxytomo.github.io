@@ -121,6 +121,15 @@
                     alert(status)
                     alert(JSON.stringify(result))
                     alert('in getLngLatLocation error')
+                    geolocation.getCurrentPosition((status, result) => {
+                        alert('in geolocation getCurrentPosition')
+                        if (status == 'complete') {
+                            longitude = result.position.lng;
+                            latitude = result.position.lat;
+                        } else {
+                            onError(result)
+                        }
+                    });
                 }
 			})
 		}
