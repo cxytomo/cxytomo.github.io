@@ -16,7 +16,8 @@
     window.curCityName = ''
     window.curCityCode = ''
     var point = {
-
+        lng: '',
+        lat: ''
     }
     var longitude = ''
     var latitude = ''
@@ -103,8 +104,10 @@
 						var lnglat = result.rectangle.split(';')[0].split(',');
 						geocoder.getAddress(lnglat, (status, data) => {
                             alert(data.info)
-							if (status === 'complete') {
+							if (status === 'complete' && data.info === 'OK') {
 								// result为对应的地理位置详细信息
+                                console.log(data)
+								console.log('getLngLatLocation 逆向地理编码查询地理位置详细信息')
 								alert('getLngLatLocation 逆向地理编码查询地理位置详细信息')
 							} else {
 								alert('getLngLatLocation 逆向地理编码查询地理位置详细信息 error')
