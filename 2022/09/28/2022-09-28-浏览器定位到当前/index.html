@@ -118,13 +118,9 @@
 						})
 					})
 				} else {
-                    alert('in geolocation getCurrentPosition')
+                    alert('in getLngLatLocation geolocation getCurrentPosition')
                     geolocation.getCurrentPosition((status, result) => {
                         alert('in geolocation getCurrentPosition')
-                        alert(status)
-                        console.log(status)
-                        console.log(result)
-                        alert(JSON.stringify(result))
                         if (status == 'complete') {
                             longitude = result.position.lng;
                             latitude = result.position.lat;
