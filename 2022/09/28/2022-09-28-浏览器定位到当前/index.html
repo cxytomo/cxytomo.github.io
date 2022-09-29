@@ -219,11 +219,14 @@
             geolocation.getCurrentPosition((status, result) => {
                 alert('in geolocation getCurrentPosition')
                 if (status == 'complete') {
-                    longitude = result.position[0];
-                    latitude = result.position[1];
+                    alert('in complete')
+                    alert(result.position[0])
+                    alert(result.position[1])
+                    // longitude = result.position[0];
+                    // latitude = result.position[1];
                 } else {
-                    longitude = 116.40;
-                    latitude = 39.91;
+                    // longitude = 116.40;
+                    // latitude = 39.91;
                 }
             });
         }).catch((e)=>{
