@@ -191,6 +191,24 @@
             })
 			map.addControl(geolocation);
             if(point && point.lng) {
+                // 有初始值, 逆向地理编码查询地理位置详细信息
+                AMap.plugin('AMap.Geocoder', () => {
+                    const geocoder = new AMap.Geocoder();
+                    const lnglat = [point.lng, point.lat];
+                    geocoder.getAddress(lnglat, (status, data) => {
+                        if (status === 'complete' && data.info === 'OK') {
+                            // result为对应的地理位置详细信息
+                            const addressComponent = data?.regeocode?.addressComponent
+                            curCityName = addressComponent.city || addressComponent.province;
+                            curCityCode = addressComponent.adcode;
+                            console.log('有初始值')
+                            console.log(curCityName)
+                            console.log(curCityCode)
+                        }
+                    })
+                })
+            } else {
+                // 无初始值
                 geolocation.getCityInfo((status, result) => {
                     if (status == 'complete') {
                         console.log('complete in getCityInfo')
