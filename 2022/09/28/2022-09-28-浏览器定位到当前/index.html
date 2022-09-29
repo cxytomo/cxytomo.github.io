@@ -221,10 +221,15 @@
                 if (status == 'complete') {
                     alert('in complete')
                     const position = result.position
+                    alert(result)
                     alert(position)
-                    alert(typeof position)
+                    alert(position instanceof Array)
                     alert(position[0])
                     alert(position[1])
+                    point = {
+                        lng: position[0],
+                        lat: position[1]
+                    }
                     // longitude = result.position[0];
                     // latitude = result.position[1];
                 } else {
