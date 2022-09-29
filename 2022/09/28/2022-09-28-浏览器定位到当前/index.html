@@ -220,7 +220,7 @@
                 alert('in geolocation getCurrentPosition')
                 if (status == 'complete') {
                     alert('in complete')
-                    alert(JSON.parse(result))
+                    alert(JSON.stringify(result))
                     alert(result.position)
                     alert(result.position[0])
                     // longitude = result.position[0];
