@@ -223,15 +223,13 @@
                     const position = result.position
                     alert(result)
                     alert(position)
-                    alert(position instanceof Array)
+                    alert(position instanceof String)
                     alert(position[0])
                     alert(position[1])
                     point = {
                         lng: position[0],
                         lat: position[1]
                     }
-                    // longitude = result.position[0];
-                    // latitude = result.position[1];
                 } else {
                     alert('in fail')
                     alert(status)
@@ -240,8 +238,6 @@
                         lng: 116.40,
                         lat: 39.91
                     }
-                    // longitude = 116.40;
-                    // latitude = 39.91;
                 }
             });
         }).catch((e)=>{
