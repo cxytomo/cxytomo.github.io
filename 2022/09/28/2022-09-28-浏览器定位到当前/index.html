@@ -225,6 +225,20 @@
                         lat: 39.91
                     }
                 }
+                AMap.plugin('AMap.Geocoder', () => {
+                    const geocoder = new AMap.Geocoder();
+                    const lnglat = [point.lng, point.lat];
+                    geocoder.getAddress(lnglat, (status, data) => {
+                        if (status === 'complete' && data.info === 'OK') {
+                            // result为对应的地理位置详细信息
+                            const addressComponent = data?.regeocode?.addressComponent
+                            curCityName = addressComponent.city || addressComponent.province;
+                            curCityCode = addressComponent.adcode;
+                            alert(curCityName)
+                            alert(curCityCode)
+                        }
+                    })
+                })
             });
         }).catch((e)=>{
             console.error(e);  //加载错误提示
