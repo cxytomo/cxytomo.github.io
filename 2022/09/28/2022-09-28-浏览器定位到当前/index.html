@@ -218,16 +218,12 @@
             // })
             geolocation.getCurrentPosition((status, result) => {
                 alert('in geolocation getCurrentPosition')
-                alert(status)
-                alert('status')
-                console.log(status)
-                alert(JSON.stringify(result))
-                console.log(result)
                 if (status == 'complete') {
-                    longitude = result.position.lng;
-                    latitude = result.position.lat;
+                    longitude = result.position[0];
+                    latitude = result.position[1];
                 } else {
-                    // onError()
+                    longitude = 116.40;
+                    latitude = 39.91;
                 }
             });
         }).catch((e)=>{
