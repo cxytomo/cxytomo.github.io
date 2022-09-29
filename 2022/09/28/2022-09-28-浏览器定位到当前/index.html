@@ -171,17 +171,17 @@
             window.map = map
             //加载PositionPicker，loadUI的路径参数为模块名中 'ui/' 之后的部分
             AMapUI.loadUI([
-                // 'misc/PositionPicker',
+                'misc/PositionPicker',
                 'misc/MobiCityPicker',
-                // 'overlay/SimpleInfoWindow'
+                'overlay/SimpleInfoWindow'
                 // 'misc/PoiPicker'
             ], (
-                // PositionPicker,
+                PositionPicker,
                 MobiCityPicker,
-                // SimpleInfoWindow
+                SimpleInfoWindow
                 // PoiPicker
             ) => {
-                // handlePositionPicker(map, PositionPicker, SimpleInfoWindow)
+                handlePositionPicker(map, PositionPicker, SimpleInfoWindow)
                 handleCityPicker(MobiCityPicker, map)
                 // const poiPicker = new PoiPicker({
                 // 		input: 'tipInput'
@@ -221,14 +221,9 @@
                 if (status == 'complete') {
                     alert('in complete')
                     const position = result.position
-                    alert(result)
-                    alert(position)
-                    alert(position instanceof String)
-                    alert(position[0])
-                    alert(position[1])
                     point = {
-                        lng: position[0],
-                        lat: position[1]
+                        lng: position.lng,
+                        lat: position.lat
                     }
                 } else {
                     alert('in fail')
@@ -239,22 +234,22 @@
                         lat: 39.91
                     }
                 }
-                AMapUI.loadUI([
-                    'misc/PositionPicker',
-                    'overlay/SimpleInfoWindow'
-                    // 'misc/PoiPicker'
-                ], (
-                    PositionPicker,
-                    MobiCityPicker,
-                    SimpleInfoWindow
-                    // PoiPicker
-                ) => {
-                    handlePositionPicker(map, PositionPicker, SimpleInfoWindow)
-                    // const poiPicker = new PoiPicker({
-                    // 		input: 'tipInput'
-                    // });
-                    // this.poiPickerReady(poiPicker, map);
-                });
+                // AMapUI.loadUI([
+                //     'misc/PositionPicker',
+                //     'overlay/SimpleInfoWindow'
+                //     // 'misc/PoiPicker'
+                // ], (
+                //     PositionPicker,
+                //     MobiCityPicker,
+                //     SimpleInfoWindow
+                //     // PoiPicker
+                // ) => {
+                //     handlePositionPicker(map, PositionPicker, SimpleInfoWindow)
+                //     // const poiPicker = new PoiPicker({
+                //     // 		input: 'tipInput'
+                //     // });
+                //     // this.poiPickerReady(poiPicker, map);
+                // });
             });
         }).catch((e)=>{
             console.error(e);  //加载错误提示
