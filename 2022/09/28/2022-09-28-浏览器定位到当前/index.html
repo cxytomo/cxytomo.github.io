@@ -82,55 +82,6 @@
             // map.setCenter([lng, lat])
         });
     }
-    function getLngLatLocation() {
-            console.log('in getLngLatLocation')
-			const citySearch = new AMap.CitySearch();
-			citySearch.getLocalCity((status, result) => {
-				if (status === 'complete') {
-					// 查询成功，result即为当前所在城市信息
-					console.log('通过ip获取当前城市：', result)
-					cityName = result.city;
-					cityCode = result.adcode;
-					var lnglat = result.rectangle.split(';')[0].split(',');
-					longitude = lnglat[0];
-					latitude = lnglat[1];
-
-					// 逆向地理编码查询地理位置详细信息
-					AMap.plugin('AMap.Geocoder', () => {
-						var geocoder = new AMap.Geocoder({
-							// city 指定进行编码查询的城市，支持传入城市名、adcode 和 citycode
-							city: result.adcode
-						})
-						var lnglat = result.rectangle.split(';')[0].split(',');
-						geocoder.getAddress(lnglat, (status, data) => {
-							if (status === 'complete' && data.info === 'OK') {
-								// result为对应的地理位置详细信息
-                                console.log(data)
-								console.log('getLngLatLocation 逆向地理编码查询地理位置详细信息')
-                                const { regeocode } = data
-                                const { formattedAddress, addressComponent } = regeocode
-                            } else {
-								console.log('getLngLatLocation 逆向地理编码查询地理位置详细信息 error')
-                            }
-						})
-					})
-				} else {
-                    console.log('in getLngLatLocation geolocation getCurrentPosition')
-                    geolocation.getCurrentPosition((status, result) => {
-                        console.log('in geolocation getCurrentPosition')
-                        if (status == 'complete') {
-                            longitude = result.position.lng;
-                            latitude = result.position.lat;
-                        } else {
-                            onError(result)
-                        }
-                    });
-                }
-			})
-		}
-    function onError() {
-			getLngLatLocation();
-	}
     AMapLoader.load({
         "key": "4d56dc84e45cd3d4aceca1a92f22f2dd",              // 申请好的Web端开发者Key，首次调用 load 时必填
         "version": "2.0",   // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
@@ -209,7 +160,6 @@
                 })
             } else {
                 // 无初始值
-                console.log('get city info error')
                 geolocation.getCurrentPosition((status, result) => {
                     console.log('in geolocation getCurrentPosition')
                     if (status == 'complete') {
@@ -219,6 +169,18 @@
                             lng: position.lng,
                             lat: position.lat
                         }
+                        AMap.plugin('AMap.Geocoder', () => {
+								const geocoder = new AMap.Geocoder();
+								const lnglat = [point.lng, point.lat];
+								geocoder.getAddress(lnglat, (status, data) => {
+										if (status === 'complete' && data.info === 'OK') {
+												// result为对应的地理位置详细信息
+												const addressComponent = data?.regeocode?.addressComponent
+												this.curCityName = addressComponent.city || addressComponent.province;
+												this.curCityCode = addressComponent.adcode;
+										}
+								})
+						})
                     } else {
                         geolocation.getCityInfo((status, result) => {
                             if (status == 'complete') {
@@ -227,27 +189,26 @@
                                     lat: result.position[1]
                                 };
                             } else {
+                                console.log('get city info error')
                                 point = {
                                     lng: 116.40,
                                     lat: 39.91
                                 };
                             }
+                            AMap.plugin('AMap.Geocoder', () => {
+								const geocoder = new AMap.Geocoder();
+								const lnglat = [point.lng, point.lat];
+								geocoder.getAddress(lnglat, (status, data) => {
+										if (status === 'complete' && data.info === 'OK') {
+												// result为对应的地理位置详细信息
+												const addressComponent = data?.regeocode?.addressComponent
+												this.curCityName = addressComponent.city || addressComponent.province;
+												this.curCityCode = addressComponent.adcode;
+										}
+								})
+						    })
                         })
                     }
-                    AMap.plugin('AMap.Geocoder', () => {
-                        const geocoder = new AMap.Geocoder();
-                        const lnglat = [point.lng, point.lat];
-                        geocoder.getAddress(lnglat, (status, data) => {
-                            if (status === 'complete' && data.info === 'OK') {
-                                // result为对应的地理位置详细信息
-                                const addressComponent = data?.regeocode?.addressComponent
-                                curCityName = addressComponent.city || addressComponent.province;
-                                curCityCode = addressComponent.adcode;
-                                alert(curCityName)
-                                alert(curCityCode)
-                            }
-                        })
-                    })
                 });
             }
         }).catch((e)=>{
