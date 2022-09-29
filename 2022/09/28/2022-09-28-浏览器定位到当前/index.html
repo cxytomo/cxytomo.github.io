@@ -190,56 +190,54 @@
                 zoomToAccuracy: true
             })
 			map.addControl(geolocation);
-            // geolocation.getCityInfo((status, result) => {
-            //     if (status == 'complete') {
-            //         curCityName = result.city;
-            //         curCityCode = result.adcode;
-            //         point = {
-            //             lng: result.position[0],
-            //             lat: result.position[1]
-            //         };
-            //         console.log(curCityName)
-            //         console.log(curCityCode)
-            //         console.log(curCityName)
-            //         console.log(point)
-            //     } else {
-            //         console.log('get city info error')
-            //         onError()
-            //     }
-            // })
-            geolocation.getCurrentPosition((status, result) => {
-                console.log('in geolocation getCurrentPosition')
-                if (status == 'complete') {
-                    console.log('in complete')
-                    const position = result.position
-                    point = {
-                        lng: position.lng,
-                        lat: position.lat
+            if(point && point.lng) {
+                geolocation.getCityInfo((status, result) => {
+                    if (status == 'complete') {
+                        console.log('complete in getCityInfo')
+                        curCityName = result.city;
+                        curCityCode = result.adcode;
+                        point = {
+                            lng: result.position[0],
+                            lat: result.position[1]
+                        };
+                    } else {
+                        console.log('get city info error')
+                        geolocation.getCurrentPosition((status, result) => {
+                            console.log('in geolocation getCurrentPosition')
+                            if (status == 'complete') {
+                                console.log('in complete')
+                                const position = result.position
+                                point = {
+                                    lng: position.lng,
+                                    lat: position.lat
+                                }
+                            } else {
+                                console.log('in fail')
+                                console.log(status)
+                                console.log(Jresult)
+                                point = {
+                                    lng: 116.40,
+                                    lat: 39.91
+                                }
+                            }
+                            AMap.plugin('AMap.Geocoder', () => {
+                                const geocoder = new AMap.Geocoder();
+                                const lnglat = [point.lng, point.lat];
+                                geocoder.getAddress(lnglat, (status, data) => {
+                                    if (status === 'complete' && data.info === 'OK') {
+                                        // result为对应的地理位置详细信息
+                                        const addressComponent = data?.regeocode?.addressComponent
+                                        curCityName = addressComponent.city || addressComponent.province;
+                                        curCityCode = addressComponent.adcode;
+                                        alert(curCityName)
+                                        alert(curCityCode)
+                                    }
+                                })
+                            })
+                        });
                     }
-                } else {
-                    console.log('in fail')
-                    console.log(status)
-                    console.log(Jresult)
-                    point = {
-                        lng: 116.40,
-                        lat: 39.91
-                    }
-                }
-                AMap.plugin('AMap.Geocoder', () => {
-                    const geocoder = new AMap.Geocoder();
-                    const lnglat = [point.lng, point.lat];
-                    geocoder.getAddress(lnglat, (status, data) => {
-                        if (status === 'complete' && data.info === 'OK') {
-                            // result为对应的地理位置详细信息
-                            const addressComponent = data?.regeocode?.addressComponent
-                            curCityName = addressComponent.city || addressComponent.province;
-                            curCityCode = addressComponent.adcode;
-                            alert(curCityName)
-                            alert(curCityCode)
-                        }
-                    })
                 })
-            });
+            }
         }).catch((e)=>{
             console.error(e);  //加载错误提示
         });
