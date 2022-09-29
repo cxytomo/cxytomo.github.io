@@ -174,19 +174,13 @@
                 'misc/PositionPicker',
                 'misc/MobiCityPicker',
                 'overlay/SimpleInfoWindow'
-                // 'misc/PoiPicker'
             ], (
                 PositionPicker,
                 MobiCityPicker,
                 SimpleInfoWindow
-                // PoiPicker
             ) => {
                 handlePositionPicker(map, PositionPicker, SimpleInfoWindow)
                 handleCityPicker(MobiCityPicker, map)
-                // const poiPicker = new PoiPicker({
-                // 		input: 'tipInput'
-                // });
-                // this.poiPickerReady(poiPicker, map);
             });
             var geolocation = new AMap.Geolocation({
 				// 是否使用高精度定位，默认：true
@@ -234,22 +228,6 @@
                         lat: 39.91
                     }
                 }
-                // AMapUI.loadUI([
-                //     'misc/PositionPicker',
-                //     'overlay/SimpleInfoWindow'
-                //     // 'misc/PoiPicker'
-                // ], (
-                //     PositionPicker,
-                //     MobiCityPicker,
-                //     SimpleInfoWindow
-                //     // PoiPicker
-                // ) => {
-                //     handlePositionPicker(map, PositionPicker, SimpleInfoWindow)
-                //     // const poiPicker = new PoiPicker({
-                //     // 		input: 'tipInput'
-                //     // });
-                //     // this.poiPickerReady(poiPicker, map);
-                // });
             });
         }).catch((e)=>{
             console.error(e);  //加载错误提示
