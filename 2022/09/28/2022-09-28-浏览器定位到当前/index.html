@@ -209,16 +209,16 @@
                 })
             } else {
                 // 无初始值
-                geolocation.getCityInfo((status, result) => {
-                    if (status == 'complete') {
-                        console.log('complete in getCityInfo')
-                        curCityName = result.city;
-                        curCityCode = result.adcode;
-                        point = {
-                            lng: result.position[0],
-                            lat: result.position[1]
-                        };
-                    } else {
+                // geolocation.getCityInfo((status, result) => {
+                //     if (status == 'complete') {
+                //         console.log('complete in getCityInfo')
+                //         curCityName = result.city;
+                //         curCityCode = result.adcode;
+                //         point = {
+                //             lng: result.position[0],
+                //             lat: result.position[1]
+                //         };
+                //     } else {
                         console.log('get city info error')
                         geolocation.getCurrentPosition((status, result) => {
                             console.log('in geolocation getCurrentPosition')
@@ -253,8 +253,8 @@
                                 })
                             })
                         });
-                    }
-                })
+                //     }
+                // })
             }
         }).catch((e)=>{
             console.error(e);  //加载错误提示
