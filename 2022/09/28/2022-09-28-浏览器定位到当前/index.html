@@ -222,12 +222,12 @@
                     } else {
                         geolocation.getCityInfo((status, result) => {
                             if (status == 'complete') {
-                                this.point = {
+                                point = {
                                     lng: result.position[0],
                                     lat: result.position[1]
                                 };
                             } else {
-                                this.point = {
+                                point = {
                                     lng: 116.40,
                                     lat: 39.91
                                 };
