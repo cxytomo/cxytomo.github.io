@@ -83,12 +83,12 @@
         });
     }
     function getLngLatLocation() {
-            alert('in getLngLatLocation')
+            console.log('in getLngLatLocation')
 			const citySearch = new AMap.CitySearch();
 			citySearch.getLocalCity((status, result) => {
 				if (status === 'complete') {
 					// 查询成功，result即为当前所在城市信息
-					alert('通过ip获取当前城市：', result)
+					console.log('通过ip获取当前城市：', result)
 					cityName = result.city;
 					cityCode = result.adcode;
 					var lnglat = result.rectangle.split(';')[0].split(',');
@@ -103,24 +103,21 @@
 						})
 						var lnglat = result.rectangle.split(';')[0].split(',');
 						geocoder.getAddress(lnglat, (status, data) => {
-                            alert(data.info)
 							if (status === 'complete' && data.info === 'OK') {
 								// result为对应的地理位置详细信息
                                 console.log(data)
 								console.log('getLngLatLocation 逆向地理编码查询地理位置详细信息')
-								alert('getLngLatLocation 逆向地理编码查询地理位置详细信息')
                                 const { regeocode } = data
                                 const { formattedAddress, addressComponent } = regeocode
-                                alert(formattedAddress)
                             } else {
-								alert('getLngLatLocation 逆向地理编码查询地理位置详细信息 error')
+								console.log('getLngLatLocation 逆向地理编码查询地理位置详细信息 error')
                             }
 						})
 					})
 				} else {
-                    alert('in getLngLatLocation geolocation getCurrentPosition')
+                    console.log('in getLngLatLocation geolocation getCurrentPosition')
                     geolocation.getCurrentPosition((status, result) => {
-                        alert('in geolocation getCurrentPosition')
+                        console.log('in geolocation getCurrentPosition')
                         if (status == 'complete') {
                             longitude = result.position.lng;
                             latitude = result.position.lat;
@@ -203,26 +200,26 @@
             //         };
             //         console.log(curCityName)
             //         console.log(curCityCode)
-            //         alert(curCityName)
+            //         console.log(curCityName)
             //         console.log(point)
             //     } else {
-            //         alert('get city info error')
+            //         console.log('get city info error')
             //         onError()
             //     }
             // })
             geolocation.getCurrentPosition((status, result) => {
-                alert('in geolocation getCurrentPosition')
+                console.log('in geolocation getCurrentPosition')
                 if (status == 'complete') {
-                    alert('in complete')
+                    console.log('in complete')
                     const position = result.position
                     point = {
                         lng: position.lng,
                         lat: position.lat
                     }
                 } else {
-                    alert('in fail')
-                    alert(status)
-                    alert(JSON.stringify(result))
+                    console.log('in fail')
+                    console.log(status)
+                    console.log(Jresult)
                     point = {
                         lng: 116.40,
                         lat: 39.91
