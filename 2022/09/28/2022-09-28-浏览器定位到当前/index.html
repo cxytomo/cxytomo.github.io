@@ -221,8 +221,7 @@
                 if (status == 'complete') {
                     alert('in complete')
                     alert(JSON.stringify(result))
-                    alert(result.position)
-                    alert(result.position[0])
+                    alert(JSON.parse(result.position))
                     // longitude = result.position[0];
                     // latitude = result.position[1];
                 } else {
