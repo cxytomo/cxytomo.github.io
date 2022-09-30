@@ -153,17 +153,15 @@
             positionPicker.start([point.lng, point.lat]);
         }
     }
-    function getLngLatLocation() {
-        const citySearch = new AMap.CitySearch();
-        citySearch.getLocalCity((status, result) => {
+    function getLocationByIP(geolocation) {
+        geolocation.getCityInfo((status, result) => {
             if (status === 'complete' && result.info === 'OK') {
                 // 查询成功，result即为当前所在城市信息
                 console.log('通过ip获取当前城市：', result)
                 curCityName = result.city;
                 curCityCode = result.adcode;
-                var lnglat = result.rectangle.split(';')[0].split(',');
-                point.lng = lnglat[0];
-                point.lat = lnglat[1];
+                point.lng = result.position[0];
+                point.lat = result.position[1];
                 setPositionPicker()
             } else {
                 curCityName = '北京市';
@@ -175,6 +173,28 @@
             }
         })
     }
+    // function getLocationByIP() {
+    //     const citySearch = new AMap.CitySearch();
+    //     citySearch.getLocalCity((status, result) => {
+    //         if (status === 'complete' && result.info === 'OK') {
+    //             // 查询成功，result即为当前所在城市信息
+    //             console.log('通过ip获取当前城市：', result)
+    //             curCityName = result.city;
+    //             curCityCode = result.adcode;
+    //             var lnglat = result.rectangle.split(';')[0].split(',');
+    //             point.lng = lnglat[0];
+    //             point.lat = lnglat[1];
+    //             setPositionPicker()
+    //         } else {
+    //             curCityName = '北京市';
+    //             curCityCode = '110000';
+    //             point.lat = 39.91
+    //             point.lng = 116.41
+    //             map.setZoom(10);
+    //             setPositionPicker()
+    //         }
+    //     })
+    // }
     function initMap() {
         AMapLoader.load({
             "key": "2c59eafa7a7a18132c8b4b44dcb1f740",              // 申请好的Web端开发者Key，首次调用 load 时必填
@@ -265,7 +285,8 @@
                             })
                         })
                     } else {
-                        getLngLatLocation()
+                        // GPS定位失败，使用IP定位
+                        getLocationByIP(geolocation)
                     }
                 });
             }
