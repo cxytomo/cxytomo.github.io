@@ -155,7 +155,7 @@
     }
     function getLocationByIP(geolocation) {
         geolocation.getCityInfo((status, result) => {
-            if (status === 'complete' && result.info === 'OK') {
+            if (status === 'complete') {
                 // 查询成功，result即为当前所在城市信息
                 console.log('通过ip获取当前城市：', result)
                 curCityName = result.city;
