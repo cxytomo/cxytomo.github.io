@@ -278,6 +278,7 @@
         const result = list.forEach(item => {
             return '<div class="van-cell van-cell--center"><div class="van-cell__title"><span data-v-3bbbda5e="">' + item.name + '</span><div data-v-3bbbda5e="" class="van-cell__label">' + item.address + '</div></div><span>' + item.distance + '</span></div>'
         })
+        console.log(result)
         document.getElementById('van-list').innerHTML = result.join('')
     }
     resetResult();
