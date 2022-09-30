@@ -49,22 +49,25 @@
             infoWindow.open(map, res.position);
             if (res.regeocode && res.regeocode.pois) {
                 fullResultList = res.regeocode.pois
-                const resultList = [{
+                const tempResultList = [{
                     address: res.nearestJunction,
                     businessArea: '',
                     distance: 0,
                     location: [res.position.lng, res.position.lat],
                     name: res.address
                 }].concat(fullResultList)
-                if (resultList.length > 1) {
-                    const name0 = resultList[0].name
-                    const name1 = resultList[1].name
-                    name0.indexOf(name1) > -1 && resultList.splice(0, 1)
-                    resultList[0].name = '[当前]' + resultList[0].name
-                    resultList = resultList
+                if (tempResultList.length > 1) {
+                    const name0 = tempResultList[0].name
+                    const name1 = tempResultList[1].name
+                    name0.indexOf(name1) > -1 && tempResultList.splice(0, 1)
+                    tempResultList[0].name = '[当前]' + tempResultList[0].name
+                    resultList = tempResultList
                 }
+                console.log(resultList)
             } else {
                 fullResultList = []
+                resultList = []
+                console.log(resultList)
             }
         })
         positionPicker.on('fail', res => {
