@@ -26,49 +26,51 @@
     var latitude = ''
 
     function handlePositionPicker(map, PositionPicker, SimpleInfoWindow) {
-			const positionPicker = new PositionPicker({
-				mode: 'dragMap',// 设定为拖拽地图模式，可选'dragMap'、'dragMarker'，默认为'dragMap'
-				map: map, // 依赖地图对象
-				iconStyle: { //自定义外观
-					url: '//webapi.amap.com/ui/1.0/assets/position-picker2.png',
-					ancher: [24, 40],
-					size: [40, 40]
-				}
-			});
-			positionPicker.start([point.lng, point.lat]);
-			// 选址结束后的回调函数
-			positionPicker.on('success', res => {
-				const infoWindow = new SimpleInfoWindow({
-					infoTitle: res.name,
-					infoBody: res.address,
-					offset: new AMap.Pixel(0, -37)
-				});
-				//显示在map上
-				infoWindow.open(map, res.position);
-				if (res.regeocode && res.regeocode.pois) {
-					window.fullResultList = res.regeocode.pois
-					const resultList = [{
-						address: res.nearestJunction,
-						businessArea: '',
-						distance: 0,
-						location: [res.position.lng, res.position.lat],
-						name: res.address
-					}].concat(window.fullResultList)
-					if (resultList.length > 1) {
-						const name0 = resultList[0].name
-						const name1 = resultList[1].name
-						name0.indexOf(name1) > -1 && resultList.splice(0, 1)
-						resultList[0].name = '[当前]' + resultList[0].name
-						window.resultList = resultList
-					}
-				} else {
-					window.fullResultList = []
-				}
-			})
-			positionPicker.on('fail', res => {
-				console.log(res)
-			})
-		}
+        positionPicker = new PositionPicker({
+            mode: 'dragMap',// 设定为拖拽地图模式，可选'dragMap'、'dragMarker'，默认为'dragMap'
+            map: map, // 依赖地图对象
+            iconStyle: { //自定义外观
+                url: '//webapi.amap.com/ui/1.0/assets/position-picker2.png',
+                ancher: [24, 40],
+                size: [40, 40]
+            }
+        });
+        if(point.lng) {
+            positionPicker.start([point.lng, point.lat]);
+        }
+        // 选址结束后的回调函数
+        positionPicker.on('success', res => {
+            const infoWindow = new SimpleInfoWindow({
+                infoTitle: res.name,
+                infoBody: res.address,
+                offset: new AMap.Pixel(0, -37)
+            });
+            //显示在map上
+            infoWindow.open(map, res.position);
+            if (res.regeocode && res.regeocode.pois) {
+                fullResultList = res.regeocode.pois
+                const resultList = [{
+                    address: res.nearestJunction,
+                    businessArea: '',
+                    distance: 0,
+                    location: [res.position.lng, res.position.lat],
+                    name: res.address
+                }].concat(fullResultList)
+                if (resultList.length > 1) {
+                    const name0 = resultList[0].name
+                    const name1 = resultList[1].name
+                    name0.indexOf(name1) > -1 && resultList.splice(0, 1)
+                    resultList[0].name = '[当前]' + resultList[0].name
+                    resultList = resultList
+                }
+            } else {
+                fullResultList = []
+            }
+        })
+        positionPicker.on('fail', res => {
+            console.log(res)
+        })
+    }
     function handleCityPicker(MobiCityPicker, map) {
         window.cityPicker = new MobiCityPicker({
             //设置主题（同名的className会被添加到外层容器上）
@@ -84,6 +86,43 @@
             window.curCityCode = adcode
             // map.setCenter([lng, lat])
         });
+    }
+    function setPositionPicker() {
+        if(!positionPicker) {
+            AMapUI.loadUI([
+                'misc/PositionPicker',
+                'overlay/SimpleInfoWindow'
+            ], (
+                PositionPicker,
+                SimpleInfoWindow
+            ) => {
+                handlePositionPicker(map, PositionPicker, SimpleInfoWindow)
+            });
+        } else {
+            positionPicker.start([point.lng, point.lat]);
+        }
+    }
+    function getLngLatLocation() {
+        const citySearch = new AMap.CitySearch();
+        citySearch.getLocalCity((status, result) => {
+            if (status === 'complete' && result.info === 'OK') {
+                // 查询成功，result即为当前所在城市信息
+                console.log('通过ip获取当前城市：', result)
+                curCityName = result.city;
+                curCityCode = result.adcode;
+                var lnglat = result.rectangle.split(';')[0].split(',');
+                point.lng = lnglat[0];
+                point.lat = lnglat[1];
+                setPositionPicker()
+            } else {
+                curCityName = '北京市';
+                curCityCode = '110000';
+                point.lat = 39.91
+                point.lng = 116.41
+                map.setZoom(10);
+                setPositionPicker()
+            }
+        })
     }
     function initMap() {
         AMapLoader.load({
@@ -119,15 +158,10 @@
             })
             window.map = map
             AMapUI.loadUI([
-                'misc/PositionPicker',
                 'misc/MobiCityPicker',
-                'overlay/SimpleInfoWindow'
             ], (
-                PositionPicker,
                 MobiCityPicker,
-                SimpleInfoWindow
             ) => {
-                handlePositionPicker(map, PositionPicker, SimpleInfoWindow)
                 handleCityPicker(MobiCityPicker, map)
             });
             const geolocation = new AMap.Geolocation({
@@ -154,9 +188,10 @@
                             curCityCode = addressComponent.adcode;
                         }
                     })
+                    setPositionPicker()
                 })
             } else {
-                // 没有初始值，进行IP城市查询
+                // 没有初始值，进行GPS定位查询
                 geolocation.getCurrentPosition((status, result) => {
                     if (status == 'complete') {
                         point = {
@@ -175,7 +210,7 @@
                                     }
                                     console.log(point.lng)
                                     console.log(point.lat)
-                                    positionPicker.start([point.lng, point.lat]);
+                                    setPositionPicker();
                             })
                         })
                     } else {
