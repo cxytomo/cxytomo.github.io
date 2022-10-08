@@ -89,12 +89,30 @@
         positionPicker.on('success', res => {
             if (res.regeocode && res.regeocode.pois) {
                 fullResultList = res.regeocode.pois
+                const {
+                    province,
+                    city,
+                    district,
+                    township,
+                    street,
+                    streetNumber,
+                } = res.regeocode.addressComponent
+                const addPrefix = `${province}${city}${district}`
+				const fullAddPrefix = `${province}${city}${district}${township}${street}${streetNumber}`
+                fullResultList.forEach(item => {
+                    const fullAddDetectReg1 = /.*市.*区.*/
+                    const fullAddDetectReg2 = /.*市.*县.*/
+                    const fullAddDetectReg3 = /.*省.*市.*/
+                    if(!fullAddDetectReg1.test(item.address) && !fullAddDetectReg2.test(item.address) && !fullAddDetectReg3.test(item.address)) {
+                        item.address = addPrefix + item.address
+                    }
+                })
                 const tempResultList = [{
-                    address: res.nearestJunction,
+                    address: fullAddPrefix,
                     businessArea: '',
                     distance: 0,
                     location: [res.position.lng, res.position.lat],
-                    name: res.address
+                    name: res.address.replace(fullAddPrefix, '')
                 }].concat(fullResultList)
                 if (tempResultList.length > 1) {
                     const name0 = tempResultList[0].name
@@ -173,28 +191,6 @@
             }
         })
     }
-    // function getLocationByIP() {
-    //     const citySearch = new AMap.CitySearch();
-    //     citySearch.getLocalCity((status, result) => {
-    //         if (status === 'complete' && result.info === 'OK') {
-    //             // 查询成功，result即为当前所在城市信息
-    //             console.log('通过ip获取当前城市：', result)
-    //             curCityName = result.city;
-    //             curCityCode = result.adcode;
-    //             var lnglat = result.rectangle.split(';')[0].split(',');
-    //             point.lng = lnglat[0];
-    //             point.lat = lnglat[1];
-    //             setPositionPicker()
-    //         } else {
-    //             curCityName = '北京市';
-    //             curCityCode = '110000';
-    //             point.lat = 39.91
-    //             point.lng = 116.41
-    //             map.setZoom(10);
-    //             setPositionPicker()
-    //         }
-    //     })
-    // }
     function initMap() {
         AMapLoader.load({
             "key": "2c59eafa7a7a18132c8b4b44dcb1f740",              // 申请好的Web端开发者Key，首次调用 load 时必填
@@ -302,7 +298,6 @@
         const result = list.map(item => {
             return '<div class="van-cell van-cell--center"><div class="van-cell__title"><span data-v-3bbbda5e="">' + item.name + '</span><div data-v-3bbbda5e="" class="van-cell__label">' + item.address + '</div></div><span>' + item.distance + '</span></div>'
         })
-        console.log(result)
         document.getElementById('van-list').innerHTML = result.join('')
     }
     resetResult();
