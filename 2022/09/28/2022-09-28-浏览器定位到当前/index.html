@@ -119,7 +119,8 @@
                     const name1 = tempResultList[1].name
                     name0.indexOf(name1) > -1 && tempResultList.splice(0, 1)
                     const infoWindow = new SimpleInfoWindow({
-                        infoBody: tempResultList[0].name,
+                        infoTitle: tempResultList[0].name,
+                        infoBody: `<p>纬度：${res.position.lng}</p><p>经度：${res.position.lat}</p>`,
                         offset: new AMap.Pixel(0, -37)
                     });
                     //显示在map上
