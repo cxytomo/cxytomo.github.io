@@ -120,7 +120,7 @@
                     name0.indexOf(name1) > -1 && tempResultList.splice(0, 1)
                     const infoWindow = new SimpleInfoWindow({
                         infoTitle: tempResultList[0].name,
-                        infoBody: `<p>纬度：${res.position.lng}</p><p>经度：${res.position.lat}</p>`,
+                        infoBody: `<p>纬度：<br>${res.position.lng}</p><p>经度：<br>${res.position.lat}</p>`,
                         offset: new AMap.Pixel(0, -37)
                     });
                     //显示在map上
@@ -297,7 +297,7 @@
     }
     function addResult(list) {
         const result = list.map(item => {
-            return '<div class="van-cell van-cell--center"><div class="van-cell__title"><span data-v-3bbbda5e="">' + item.name + '</span><div data-v-3bbbda5e="" class="van-cell__label">' + item.address + '</div></div><span>' + item.distance + '</span></div>'
+            return '<div class="van-cell van-cell--center"><div class="van-cell__title"><span data-v-3bbbda5e="">' + item.name + '</span><div data-v-3bbbda5e="" class="van-cell__label">' + item.address + '</div></div><span>' + item.distance + '米</span></div>'
         })
         document.getElementById('van-list').innerHTML = result.join('')
     }
